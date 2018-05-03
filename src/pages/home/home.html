@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid class="board">
+    <ion-row *ngFor="let row of gameGrid; let y = index">
+      <ion-col *ngFor="let item of row; let x = index">
+        <img class="coin" align-items-center src={{item}} />
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
