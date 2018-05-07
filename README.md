@@ -5,7 +5,7 @@
 ## Firebase
 Create the file `src/lib/firebaseConfig.ts` and fill it with the following data:
 ```
-export const firebaseConfig = {
+export const FIREBASE_CONFIG = {
   apiKey: "",
   authDomain: "",
   databaseURL: "",
