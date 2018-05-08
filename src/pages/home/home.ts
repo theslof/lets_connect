@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import {FirebaseTestPage} from "../firebase-test/firebase-test";
 
 @Component({
   selector: 'page-home',
@@ -24,6 +25,10 @@ export class HomePage {
         this.gameGrid[i][j] = Math.random() > .5 ? this.coins.yellow : this.coins.red;
       }
     }
+  }
+
+  private openFirebaseTest(){
+    this.navCtrl.push(FirebaseTestPage);
   }
 
 }
