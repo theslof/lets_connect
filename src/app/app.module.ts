@@ -21,9 +21,9 @@ import {FirebaseTestPage} from "../pages/firebase-test/firebase-test";
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-//    AngularFireModule.initializeApp(FIREBASE_CONFIG),
-//    AngularFireAuthModule,
-//    AngularFirestoreModule.enablePersistence() //.enablePersistence() used for offline storage
+    AngularFireModule.initializeApp(FIREBASE_CONFIG),
+    AngularFireAuthModule,
+    AngularFirestoreModule.enablePersistence() //.enablePersistence() used for offline storage
   ],
   bootstrap: [IonicApp],
   entryComponents: [
