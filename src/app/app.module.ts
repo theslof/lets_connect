@@ -10,23 +10,26 @@ import {AngularFirestoreModule} from "angularfire2/firestore";
 import {AngularFireAuthModule} from "angularfire2/auth";
 import {AngularFireModule} from "angularfire2";
 import {FIREBASE_CONFIG} from "../lib/firebaseConfig";
+import {FirebaseTestPage} from "../pages/firebase-test/firebase-test";
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    FirebaseTestPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(FIREBASE_CONFIG),
-    AngularFireAuthModule,
-    AngularFirestoreModule.enablePersistence() //.enablePersistence() used for offline storage
+//    AngularFireModule.initializeApp(FIREBASE_CONFIG),
+//    AngularFireAuthModule,
+//    AngularFirestoreModule.enablePersistence() //.enablePersistence() used for offline storage
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    FirebaseTestPage
   ],
   providers: [
     StatusBar,
