@@ -15,6 +15,6 @@
 
 <ion-content padding>
   <ion-textarea [(ngModel)]="firebaseText"></ion-textarea>
-  <button ion-button (click)="saveText()">Save</button>
+  <button ion-button (click)="saveText()" [disabled]="!isEnabled"><ion-spinner name="bubbles" *ngIf="!isEnabled"></ion-spinner>Save</button>
 
 </ion-content>

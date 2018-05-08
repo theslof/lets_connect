@@ -27,7 +27,7 @@ export class HomePage {
     }
   }
 
-  private openFirebaseTest(){
+  public openFirebaseTest(){
     this.navCtrl.push(FirebaseTestPage);
   }
 
