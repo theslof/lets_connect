@@ -1,9 +1,3 @@
-<!--
-  Generated template for the FirebaseTestPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -14,9 +8,15 @@
 
 
 <ion-content padding>
+
   <h1>Auto-updating text area</h1>
   <ion-textarea [(ngModel)]="firebaseText" class="rounded-border"></ion-textarea>
-  <button ion-button (click)="saveText()" [disabled]="!isEnabled"><ion-spinner name="bubbles" *ngIf="!isEnabled"></ion-spinner>Save</button>
+  <button ion-button (click)="saveText()" [disabled]="!isEnabled">
+    <!-- ngIf statement will only show the loading spinner if isEnabled is false.
+    Otherwise the ion-spinner tag is replaced with the #save_string ng-template, ie. the string "Save" -->
+    <ion-spinner name="bubbles" *ngIf="!isEnabled; else save_string"></ion-spinner>
+  </button>
+
   <h1>Auto-updating list with ion-input</h1>
   <ion-list>
     <ion-item *ngFor="let item of items | async">
@@ -27,3 +27,5 @@
   <button ion-button (click)="addItem()"><ion-icon name="custom-infinity" style="margin-right: 0.5em"></ion-icon> Add</button>
 
 </ion-content>
+
+<ng-template #save_string>Save</ng-template>
