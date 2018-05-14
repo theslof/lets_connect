@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="611.33337"
+   height="277.33334"
+   viewBox="0 0 161.74862 73.377782"
+   version="1.1"
+   id="svg883"
+   inkscape:version="0.92.2 5c3e80d, 2017-08-06"
+   sodipodi:docname="infinity-icon.svg"
+   inkscape:export-filename="/Users/theslof/Documents/lets_connect_login.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <defs
+     id="defs877" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.5343511"
+     inkscape:cx="305.66668"
+     inkscape:cy="138.66667"
+     inkscape:document-units="mm"
+     inkscape:current-layer="g2265"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1440"
+     inkscape:window-height="855"
+     inkscape:window-x="0"
+     inkscape:window-y="1"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata880">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-64.759006,90.223649)"
+     style="display:inline">
+    <g
+       id="g2258"
+       style="stroke:none">
+      <g
+         id="g2265">
+        <g
+           aria-label="∞"
+           transform="matrix(0.26458333,0,0,0.26458333,0,-211.00002)"
+           style="font-style:normal;font-weight:normal;font-size:533.33331299px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#007aff;fill-opacity:1;stroke:none;stroke-opacity:1"
+           id="flowRoot2176" />
+        <path
+           id="rect2244"
+           style="fill:#007aff;fill-opacity:1;stroke:none;stroke-width:2.53842068;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           d="m 189.64217,-75.583489 c -5.29167,0 -10.46557,2.175807 -15.52205,6.526734 l -17.99166,15.345832 17.99166,15.698267 c 4.93889,4.350927 10.11279,6.52673 15.52205,6.52673 6.11482,0 11.28924,-2.175803 15.52257,-6.52673 4.35093,-4.350927 6.52622,-9.524828 6.52622,-15.522052 0,-6.114814 -2.17529,-11.288715 -6.52622,-15.522047 -4.35093,-4.350927 -9.52535,-6.526734 -15.52257,-6.526734 z m -88.1941,0 c -5.997223,0 -11.171642,2.175807 -15.522567,6.526734 -4.350925,4.350924 -6.526215,9.524827 -6.526215,15.522047 0,5.87963 2.116667,11.053531 6.35,15.522052 4.350925,4.350927 9.583968,6.52673 15.698782,6.52673 5.64445,0 10.87697,-2.175803 15.69827,-6.52673 l 17.4625,-15.522052 -17.4625,-15.522047 c -4.8213,-4.350927 -10.05382,-6.526734 -15.69827,-6.526734 z m 44.09705,31.926506 -18.16806,16.05139 c -7.99629,7.173148 -16.58055,10.759723 -25.75278,10.759723 -10.230551,0 -18.932404,-3.645371 -26.105551,-10.93611 -7.173148,-7.290742 -10.759723,-15.875003 -10.759723,-25.752779 0,-10.112965 3.586575,-18.756019 10.759723,-25.929167 7.290742,-7.173147 15.992594,-10.759723 26.105551,-10.759723 9.28982,0 17.87408,3.586576 25.75278,10.759723 l 18.16806,15.875 18.16806,-15.875 c 8.11389,-7.173147 16.75694,-10.759723 25.92916,-10.759723 10.11297,0 18.75602,3.645371 25.92917,10.936111 7.29074,7.173147 10.93611,15.757408 10.93611,25.752779 0,9.877776 -3.58657,18.462037 -10.75972,25.752779 -7.17315,7.290739 -15.875,10.93611 -26.10556,10.93611 -9.28981,0 -17.93287,-3.586575 -25.92916,-10.759723 z" />
+      </g>
+    </g>
+  </g>
+</svg>

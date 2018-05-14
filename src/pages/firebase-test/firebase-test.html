@@ -14,7 +14,16 @@
 
 
 <ion-content padding>
-  <ion-textarea [(ngModel)]="firebaseText"></ion-textarea>
+  <h1>Auto-updating text area</h1>
+  <ion-textarea [(ngModel)]="firebaseText" class="rounded-border"></ion-textarea>
   <button ion-button (click)="saveText()" [disabled]="!isEnabled"><ion-spinner name="bubbles" *ngIf="!isEnabled"></ion-spinner>Save</button>
+  <h1>Auto-updating list with ion-input</h1>
+  <ion-list>
+    <ion-item *ngFor="let item of items | async">
+        {{item.text}}
+    </ion-item>
+  </ion-list>
+  <ion-input [(ngModel)]="itemInput" type="text" class="rounded-border"></ion-input>
+  <button ion-button (click)="addItem()"><ion-icon name="custom-infinity" style="margin-right: 0.5em"></ion-icon> Add</button>
 
 </ion-content>
