@@ -15,4 +15,22 @@ page-home {
       height: auto;
     }
   }
+
+  h1{
+    color: map-get($colors, primary);
+  }
+
+  .center{
+    margin: auto;
+  }
+
+  .infinity-logo{
+    max-width: 300px;
+    display: block;
+    margin: auto;
+  }
+
+  .margin-top-50{
+    margin-top: 50px;
+  }
 }

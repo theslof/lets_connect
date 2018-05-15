@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {FirebaseTestPage} from "../firebase-test/firebase-test";
 
 @Component({
   selector: 'page-home',
@@ -27,8 +26,14 @@ export class HomePage {
     }
   }
 
-  private openFirebaseTest(){
-    this.navCtrl.push(FirebaseTestPage);
+  private startLocalGame(){
+    console.log('"Start local game" clicked!');
+    //this.navCtrl.push(SetupLocalGamePage);
+  }
+
+  private startOnlineGame(){
+    console.log('"Start online game" clicked!');
+    //this.navCtrl.push(SetupOnlineGamePage);
   }
 
 }

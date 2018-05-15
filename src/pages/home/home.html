@@ -1,18 +1,27 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Let's Connect
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-grid class="board">
-    <ion-row *ngFor="let row of gameGrid; let y = index">
-      <ion-col *ngFor="let item of row; let x = index">
-        <img class="coin" align-items-center src={{item}} />
+  <div text-center style="padding-top: 50px">
+    <ion-row>
+      <ion-col col-12>
+        <h1>Let's Connect!</h1>
+      </ion-col>
+      <ion-col col-12>
+        <img src="../assets/imgs/lets_connect_logo.png" class="infinity-logo"/>
+      </ion-col>
+      <ion-col col-12>
+
+        <button ion-button large block class="margin-top-50" (click)="startLocalGame()">Local Game</button>
+      </ion-col>
+      <ion-col col-12>
+        <button ion-button large block (click)="startOnlineGame()">Online Game</button>
       </ion-col>
     </ion-row>
-  </ion-grid>
-  <button ion-button (click)="openFirebaseTest()">Firebase Testing</button>
+  </div>
 </ion-content>
