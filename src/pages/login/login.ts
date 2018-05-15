@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {FirebaseTestPage} from "../firebase-test/firebase-test";
+import {SignupPage} from "../signup/signup";
 
 /**
  * Generated class for the LoginPage page.
@@ -20,6 +22,14 @@ export class LoginPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+  }
+
+  public login(){
+    this.navCtrl.push(FirebaseTestPage);
+  }
+
+  public signup(){
+    this.navCtrl.push(SignupPage);
   }
 
 }

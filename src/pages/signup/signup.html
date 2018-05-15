@@ -1,5 +1,5 @@
 <!--
-  Generated template for the LoginPage page.
+  Generated template for the SignupPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -7,15 +7,13 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Let´s Connect</ion-title>
+    <ion-title>Sign up</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
-  <img src="../assets/imgs/lets_connect_logo.png" style="width: 300px; height: auto" />
 
   <ion-list>
 
@@ -29,11 +27,11 @@
       <ion-input [(ngModel)]="password"  type="password" value=""></ion-input>
     </ion-item>
 
-  </ion-list>
+    <ion-item>
+      <ion-label floating>E-mail</ion-label>
+      <ion-input [(ngModel)]="email" type="text" value=""></ion-input>
+    </ion-item>
 
-  <div padding>
-    <button primary block (click)="login()">Login</button>
-    <button primary block (click)="signup()">Create Account</button>
-  </div>
+  </ion-list>
 
 </ion-content>
