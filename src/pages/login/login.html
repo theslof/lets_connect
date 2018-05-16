@@ -13,35 +13,31 @@
 </ion-header>
 
 
+
 <ion-content padding>
   <div class="login-container center">
-
     <img src="../assets/imgs/lets_connect_logo.png" class="image-logo center"/>
-
+  <br>
 
     <ion-list>
-
       <ion-item>
-
-        <ion-label floating>E-mail</ion-label>
-
-        <ion-input [(ngModel)]="username" type="text" value=""></ion-input>
-
+        <ion-label color="primary" floating>E-mail</ion-label>
+        <ion-input type="email" value=""></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Password</ion-label>
+        <ion-label color="primary" floating>Password</ion-label>
         <ion-input [(ngModel)]="password" type="password" value=""></ion-input>
       </ion-item>
 
-    </ion-list>
 
-    <div padding>
+      <div padding>
 
       <button ion-button block (click)="login()">Log in</button>
-
-      <!--<button primary block (click)="login()">Login</button> -->
       <button ion-button color="secondary" block (click)="signup()">Create Account</button>
-    </div>
+
+      </div>
+    </ion-list>
+
   </div>
 </ion-content>
