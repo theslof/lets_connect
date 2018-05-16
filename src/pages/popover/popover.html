@@ -1,0 +1,7 @@
+<ion-list>
+  <ion-list-header *ngIf="data.title">{{data.title}}</ion-list-header>
+  <button *ngFor="let item of data.choices; let i = index" ion-item (click)="click(i)">
+    <ion-icon [name]="item.icon"></ion-icon>
+    {{item.text}}
+  </button>
+</ion-list>

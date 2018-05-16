@@ -1,39 +1,43 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {NavController, Popover, PopoverController} from 'ionic-angular';
+import {PopoverPage, PopoverMenuData} from "../popover/popover";
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  gameGrid: string[][];
-  width=7;
-  height=6;
-  coins = {
-    blank: "assets/imgs/coin-none.svg",
-    red: "assets/imgs/coin-red.svg",
-    yellow: "assets/imgs/coin-yellow.svg",
-
+  menu: Popover;
+  menuData: PopoverMenuData = {
+    choices: [
+      {icon: "log-out", text: "Sign out"},
+      ],
+    callback: this.onOptionsItemSelected
   };
 
-  constructor(public navCtrl: NavController) {
-    this.gameGrid = new Array(this.height);
-    for(let i = 0; i < this.gameGrid.length; i++){
-      this.gameGrid[i] = new Array(this.width);
-      for(let j = 0; j < this.gameGrid[i].length; j++){
-        this.gameGrid[i][j] = Math.random() > .5 ? this.coins.yellow : this.coins.red;
-      }
-    }
+  constructor(public navCtrl: NavController, private popCtrl: PopoverController) {
+    this.menu = this.popCtrl.create(PopoverPage, this.menuData);
   }
 
-  private startLocalGame(){
+  public startLocalGame() {
     console.log('"Start local game" clicked!');
     //this.navCtrl.push(SetupLocalGamePage);
   }
 
-  private startOnlineGame(){
+  public startOnlineGame() {
     console.log('"Start online game" clicked!');
     //this.navCtrl.push(SetupOnlineGamePage);
+  }
+
+  public onOptionsItemSelected(id: number){
+    switch (id) {
+      case 0:
+        console.log("Sign out clicked");
+        //auth.logout();
+        break;
+      default:
+        console.log("Unknown choice");
+    }
   }
 
 }
