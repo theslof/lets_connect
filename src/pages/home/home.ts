@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {FirebaseTestPage} from "../firebase-test/firebase-test";
+import {PlayfieldPage} from "../playfield/playfield";
 
 @Component({
   selector: 'page-home',
@@ -29,6 +30,10 @@ export class HomePage {
 
   private openFirebaseTest(){
     this.navCtrl.push(FirebaseTestPage);
+  }
+
+  private openPlayfield(){
+    this.navCtrl.push(PlayfieldPage);
   }
 
 }
