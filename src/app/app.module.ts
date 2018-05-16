@@ -11,11 +11,13 @@ import {AngularFireAuthModule} from "angularfire2/auth";
 import {AngularFireModule} from "angularfire2";
 import {FIREBASE_CONFIG} from "../lib/firebaseConfig";
 import {FirebaseTestPage} from "../pages/firebase-test/firebase-test";
+import {SetupLocalGamePage} from "../pages/setup-local-game/setup-local-game";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
+    SetupLocalGamePage,
     FirebaseTestPage
   ],
   imports: [
@@ -29,6 +31,7 @@ import {FirebaseTestPage} from "../pages/firebase-test/firebase-test";
   entryComponents: [
     MyApp,
     HomePage,
+    SetupLocalGamePage,
     FirebaseTestPage
   ],
   providers: [
