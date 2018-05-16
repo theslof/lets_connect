@@ -24,24 +24,41 @@
     </ion-item>
 
 
-    <ion-item>
+    <!--<ion-item>
       <ion-label floating>Password</ion-label>
       <ion-input [(ngModel)]="password"  type="password" value=""></ion-input>
       <button ion-button clear item-end style="height:32px;">
         <ion-icon name="eye" style="font-size:32px;"></ion-icon>
       </button>
+    </ion-item> -->
+
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input [type]="type" [(ngModel)]="password"></ion-input>
+
+      <button *ngIf="!showPass" ion-button clear color="dark" type="button" item-right
+              (click)="showPassword()"> <ion-icon name="ios-eye-off-outline"></ion-icon></button>
+      <button *ngIf="showPass" ion-button clear color="dark" type="button" item-right
+              (click)="showPassword()"> <ion-icon name="ios-eye-outline"></ion-icon></button>
+
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Confirm Password</ion-label>
+      <!-- <ion-input [type]="type" name="password" ngModel #password="ngModel" required pattern=".{4,10}"></ion-input>-->
+      <ion-input [(ngModel)]="confirmpassword" [type]="type"></ion-input>
+
     </ion-item>
 
 
-
-    <ion-item>
+    <!--<ion-item>
     <ion-label floating>Confirm password</ion-label>
     <ion-input [(ngModel)]="confirmPassword"  type="password" value=""></ion-input>
       <button ion-button clear item-end style="height:32px;">
         <ion-icon name="eye" style="font-size:32px;"></ion-icon>
       </button>
     </ion-item>
-
+-->
 
     <ion-item>
       <ion-label floating>E-mail</ion-label>
@@ -56,5 +73,8 @@
   </ion-list>
 
   </div>
+
+  <ion-item>Password: {{password}}</ion-item>
+  <ion-item>Confirm Password: {{confirmpassword}}</ion-item>
 
 </ion-content>

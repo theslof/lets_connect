@@ -16,6 +16,9 @@ import {HomePage} from "../home/home";
 })
 export class SignupPage {
 
+  password:string = "";
+  confirmpassword:string = "";
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
   }
 
@@ -28,15 +31,51 @@ export class SignupPage {
   }
 
   create() {
-    let alert = this.alertCtrl.create({
+    /*let alert = this.alertCtrl.create({
       title: 'Warning',
       subTitle: 'Do not click OK',
       buttons: ['OK','Cancel']
     });
 
     alert.present();
+*/
+    if(this.password == this.confirmpassword){
+   console.log('Correct')
+
+    } else {
+  console.log('Wrong')
+
+    }
 
   }
 
+  public type = 'password';
+  public showPass = false;
+
+
+  public showPassword() {
+    this.showPass = !this.showPass;
+
+    if(this.showPass){
+      this.type = 'text';
+    } else {
+      this.type = 'password';
+    }
+}
+
+  public string = 'confirmPassword';
+  public showString = false;
+
+  confirmPassword() {
+
+    this.showPass = !this.showPass;
+
+    if(this.showString){
+      this.type = 'text';
+    } else {
+      this.string = 'confirmPassword';
+    }
+
+  }
 
 }
