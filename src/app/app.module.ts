@@ -11,12 +11,14 @@ import {AngularFireAuthModule} from "angularfire2/auth";
 import {AngularFireModule} from "angularfire2";
 import {FIREBASE_CONFIG} from "../lib/firebaseConfig";
 import {FirebaseTestPage} from "../pages/firebase-test/firebase-test";
+import {SignupPage} from "../pages/signup/signup";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    FirebaseTestPage
+    FirebaseTestPage,
+    SignupPage
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,8 @@ import {FirebaseTestPage} from "../pages/firebase-test/firebase-test";
   entryComponents: [
     MyApp,
     HomePage,
-    FirebaseTestPage
+    FirebaseTestPage,
+    SignupPage
   ],
   providers: [
     StatusBar,
