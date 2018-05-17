@@ -28,6 +28,7 @@ export class SignupPage {
 
   cancel() {
     this.navCtrl.push(HomePage);
+
   }
 
   create() {
@@ -40,7 +41,9 @@ export class SignupPage {
     alert.present();
 */
     if(this.password == this.confirmpassword){
-   console.log('Correct')
+      console.log('Correct')
+      alert('Hello');
+
 
     } else {
   console.log('Wrong')

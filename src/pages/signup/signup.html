@@ -19,7 +19,7 @@
   <ion-list>
 
     <ion-item>
-      <ion-label floating>Username</ion-label>
+      <ion-label color="primary" floating>Username</ion-label>
       <ion-input [(ngModel)]="username" type="text" value=""></ion-input>
     </ion-item>
 
@@ -33,18 +33,18 @@
     </ion-item> -->
 
     <ion-item>
-      <ion-label floating>Password</ion-label>
+      <ion-label color="primary" floating>Password</ion-label>
       <ion-input [type]="type" [(ngModel)]="password"></ion-input>
 
-      <button *ngIf="!showPass" ion-button clear color="dark" type="button" item-right
-              (click)="showPassword()"> <ion-icon name="ios-eye-off-outline"></ion-icon></button>
-      <button *ngIf="showPass" ion-button clear color="dark" type="button" item-right
-              (click)="showPassword()"> <ion-icon name="ios-eye-outline"></ion-icon></button>
+      <button *ngIf="!showPass" ion-button clear color="blue" type="button" item-right
+              (click)="showPassword()"> <ion-icon name="eye-off"></ion-icon></button>
+      <button *ngIf="showPass" ion-button clear color="blue" type="button" item-right
+              (click)="showPassword()"> <ion-icon name="eye"></ion-icon></button>
 
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Confirm Password</ion-label>
+      <ion-label color="primary" floating>Confirm Password</ion-label>
       <!-- <ion-input [type]="type" name="password" ngModel #password="ngModel" required pattern=".{4,10}"></ion-input>-->
       <ion-input [(ngModel)]="confirmpassword" [type]="type"></ion-input>
 
@@ -61,7 +61,7 @@
 -->
 
     <ion-item>
-      <ion-label floating>E-mail</ion-label>
+      <ion-label color="primary" floating>E-mail</ion-label>
       <ion-input type="email" [(ngModel)]="email"></ion-input>
     </ion-item>
 
@@ -74,7 +74,8 @@
 
   </div>
 
-  <ion-item>Password: {{password}}</ion-item>
-  <ion-item>Confirm Password: {{confirmpassword}}</ion-item>
+ <!-- <ion-item>Password: {{password}}</ion-item>
+  <ion-item>Confirm Password: {{confirmpassword}}</ion-item> -->
+
 
 </ion-content>
