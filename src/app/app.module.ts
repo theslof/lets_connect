@@ -13,6 +13,7 @@ import {FIREBASE_CONFIG} from "../lib/firebaseConfig";
 import {FirebaseTestPage} from "../pages/firebase-test/firebase-test";
 import {PopoverPage} from "../pages/popover/popover";
 import {SetupLocalGamePage} from "../pages/setup-local-game/setup-local-game";
+import {LoginPage} from "../pages/login/login";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {SetupLocalGamePage} from "../pages/setup-local-game/setup-local-game";
     HomePage,
     PopoverPage,
     SetupLocalGamePage,
+    LoginPage,
     FirebaseTestPage
   ],
   imports: [
@@ -35,6 +37,7 @@ import {SetupLocalGamePage} from "../pages/setup-local-game/setup-local-game";
     HomePage,
     PopoverPage,
     SetupLocalGamePage,
+    LoginPage,
     FirebaseTestPage
   ],
   providers: [
