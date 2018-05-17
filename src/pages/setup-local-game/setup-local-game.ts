@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {PlayfieldPage} from "../playfield/playfield";
 
 @IonicPage()
 @Component({
@@ -50,7 +51,7 @@ export class SetupLocalGamePage {
   }
 
   public startGame(){
-    //this.navCtrl.push(LocalGamePage, {resume: false});
+    this.navCtrl.push(PlayfieldPage, {resume: false});
   }
 
 }

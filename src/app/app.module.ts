@@ -16,15 +16,17 @@ import {SetupLocalGamePage} from "../pages/setup-local-game/setup-local-game";
 import {LoginPage} from "../pages/login/login";
 import {SignupPage} from "../pages/signup/signup";
 import {PlayfieldPage} from "../pages/playfield/playfield";
+import {AboutPage} from "../pages/about/about";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
+    AboutPage,
     PopoverPage,
     SetupLocalGamePage,
     LoginPage,
-    SignupPage
+    SignupPage,
     FirebaseTestPage,
     PlayfieldPage
   ],
@@ -39,10 +41,11 @@ import {PlayfieldPage} from "../pages/playfield/playfield";
   entryComponents: [
     MyApp,
     HomePage,
+    AboutPage,
     PopoverPage,
     SetupLocalGamePage,
     LoginPage,
-    SignupPage
+    SignupPage,
     FirebaseTestPage,
     PlayfieldPage
   ],

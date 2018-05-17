@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, Popover, PopoverController} from 'ionic-angular';
 import {PopoverPage, PopoverMenuData} from "../popover/popover";
+import {SetupLocalGamePage} from "../setup-local-game/setup-local-game";
 
 @Component({
   selector: 'page-home',
@@ -21,7 +22,7 @@ export class HomePage {
 
   public startLocalGame() {
     console.log('"Start local game" clicked!');
-    //this.navCtrl.push(SetupLocalGamePage);
+    this.navCtrl.push(SetupLocalGamePage);
   }
 
   public startOnlineGame() {
