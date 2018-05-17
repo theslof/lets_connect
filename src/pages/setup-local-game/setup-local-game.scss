@@ -1,0 +1,57 @@
+page-setup-local-game {
+  h1{
+    color: map-get($colors, primary);
+  }
+
+  h2{
+    color: map-get($colors, primary);
+  }
+
+  .center{
+    margin: auto;
+  }
+
+  .inline{
+    display: inline;
+  }
+
+  .align-mid{
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  .user-card{
+    color: map-get($colors, primary);
+    font-size: 2em;
+    vertical-align: center;
+    padding: 10px;
+    border: 2px solid map-get($colors, primary);
+    border-radius: 5px;
+  }
+
+  .infinity-logo{
+    max-width: 300px;
+    height: auto;
+    display: block;
+    margin: 40px auto;
+  }
+
+  .margin-top-50{
+    margin-top: 50px;
+  }
+
+  ion-icon {
+    &[class*="custom-"] {
+      mask-size: contain;
+      mask-position: 50% 50%;
+      mask-repeat: no-repeat;
+      background: currentColor;
+      width: 1em;
+      height: 1em;
+    }
+
+    &[class*="custom-profile"] {
+      mask-image: url(../assets/imgs/profile-image-placeholder.svg);
+    }
+  }
+}

@@ -12,12 +12,14 @@ import {AngularFireModule} from "angularfire2";
 import {FIREBASE_CONFIG} from "../lib/firebaseConfig";
 import {FirebaseTestPage} from "../pages/firebase-test/firebase-test";
 import {PopoverPage} from "../pages/popover/popover";
+import {SetupLocalGamePage} from "../pages/setup-local-game/setup-local-game";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     PopoverPage,
+    SetupLocalGamePage,
     FirebaseTestPage
   ],
   imports: [
@@ -32,6 +34,7 @@ import {PopoverPage} from "../pages/popover/popover";
     MyApp,
     HomePage,
     PopoverPage,
+    SetupLocalGamePage,
     FirebaseTestPage
   ],
   providers: [
