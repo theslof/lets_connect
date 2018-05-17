@@ -27,6 +27,34 @@ export class PlayfieldPage {
     this.drawPlayfield();
   }
 
+  //----------------------------------------------
+  // Get data from db here.
+  //
+
+  // Get display names from db.
+  private getPlayers() {
+    return "Player 1 - Player 2"
+  }
+
+  //----------------------------------------------
+  // Helper functions.
+  //
+
+  // Returns coin width based on grid size.
+  private getCoinWidthStyle() {
+    return 100/this.width + "%";
+  }
+
+  // Returns the coin position in % for top placing box.
+  private getPlaceCoinPosition() {
+    return (100/this.width)*this.placeCoinPosition + "%";
+  }
+
+  //----------------------------------------------
+  // Grid logic.
+  //
+
+  // Draw the main grid.
   private drawPlayfield() {
     for(let i = 0; i < this.gameGrid.length; i++){
       this.gameGrid[i] = new Array(this.width);
@@ -36,39 +64,29 @@ export class PlayfieldPage {
     }
   }
 
-  private getPlaceCoinPosition() {
-    return (100/this.width)*this.placeCoinPosition + "%";
-  }
-
-  private getPlacedY() {
-    for(this.placedY=5; this.placedY>=0; this.placedY--) {
-      if (this.gameGrid[this.placedY][this.placeCoinPosition] === this.coins.blank) return this.placedY;
-    }
-  }
-
-  private getNextCoin() {
-    if (this.playerOneTurn) return this.coins.yellow;
-    return this.coins.red;
-
-  }
-
+  // Place coin in grid.
   private dropCoin(x: number, y: number ,coinColor: any) {
     this.gameGrid[y][x] = coinColor;
   }
 
+  // Cheks if there is a coin placed in grid.
   private isPlaced(x,y) {
     return (this.gameGrid[y][x] !== this.coins.blank);
   }
 
-  private getPlayers() {
-    // Hämta användare och motståndare från db
-    return "Player 1 - Player 2"
+  // Returns number of empty slots in the column under the placing coin.
+  private getPlacedY() {
+    for(this.placedY=5; this.placedY>=0; this.placedY--) {
+      if (this.gameGrid[this.placedY][this.placeCoinPosition] === this.coins.blank) return this.placedY;
+
+    }
   }
 
-  private getCoinWidthStyle() {
-    return 100/this.width + "%";
-  }
+  //----------------------------------------------
+  // Controller and turn switching logic.
+  //
 
+  // Control buttons.
   private moveLeft() {
     if(this.placeCoinPosition < this.width-1) {
       if(this.dropping) this.switchTurn();
@@ -76,7 +94,6 @@ export class PlayfieldPage {
       this.placeCoinPosition++;
     }
   }
-
   private moveRight() {
     if(this.placeCoinPosition > 0) {
       if(this.dropping) this.switchTurn();
@@ -84,19 +101,26 @@ export class PlayfieldPage {
       this.placeCoinPosition--;
     }
   }
-
   private moveDown() {
     this.dropping = true;
     this.dropCoin(this.placeCoinPosition, this.getPlacedY(), this.getNextCoin());
   }
 
+  // Aborts animation and switches to next player.
   private nextPlayerTurn() {
     this.switchTurn();
     this.dropping = false;
   }
 
+  // Switch player
   private switchTurn() {
     this.playerOneTurn = !this.playerOneTurn
+  }
+
+  // Switches between yellow and red and returns the color.
+  private getNextCoin() {
+    if (this.playerOneTurn) return this.coins.yellow;
+    return this.coins.red;
   }
 
 }
