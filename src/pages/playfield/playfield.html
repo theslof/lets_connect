@@ -1,0 +1,46 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{getPlayers()}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding overflow-scroll="true">
+
+  <ion-row class="playerBox" center>
+    <ion-col text-center>
+      <h2>Player One</h2>
+      <h2>Player Two</h2>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="placingBox" center>
+    <ion-col [style.left]=getPlaceCoinPosition()>
+      <img class="coin coinSlideX" *ngIf="!dropping" [style.width]=getCoinWidthStyle() align-items-center src={{getNextCoin()}}/>
+    </ion-col>
+  </ion-row>
+
+  <ion-grid class="board" center>
+    <ion-row *ngFor="let row of gameGrid; let y = index" center>
+      <ion-col *ngFor="let item of row; let x = index" text-center>
+        <img *ngIf="(x == placeCoinPosition) && (y == placedY) && dropping" class="coin coinSlideInDown" align-items-center src={{item}}/>
+        <img *ngIf="(x != placeCoinPosition) || (y != placedY) || !dropping" class="coin" align-items-center src={{item}}/>
+        <img class="boardBackground" src="../../assets/imgs/playfield-background2.svg"/>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-row class="moveButtons" center>
+    <ion-col text-center *ngIf="!dropping" [ngClass]="playerOneTurn ? 'buttonColorPlayerOne':'buttonColorPlayerTwo'">
+      <ion-icon name="ios-arrow-dropleft-circle" (click)="moveRight()"></ion-icon>
+      <ion-icon name="ios-arrow-dropdown-circle" (click)="moveDown()"></ion-icon>
+      <ion-icon name="ios-arrow-dropright-circle" (click)="moveLeft()"></ion-icon>
+    </ion-col>
+    <ion-col text-center *ngIf="dropping" [ngClass]="playerOneTurn ? 'buttonColorPlayerOne':'buttonColorPlayerTwo'">
+      <button ion-button large round (click)="nextPlayerTurn()">End Turn</button>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

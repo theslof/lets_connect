@@ -15,6 +15,7 @@ import {PopoverPage} from "../pages/popover/popover";
 import {SetupLocalGamePage} from "../pages/setup-local-game/setup-local-game";
 import {LoginPage} from "../pages/login/login";
 import {SignupPage} from "../pages/signup/signup";
+import {PlayfieldPage} from "../pages/playfield/playfield";
 
 @NgModule({
   declarations: [
@@ -23,8 +24,9 @@ import {SignupPage} from "../pages/signup/signup";
     PopoverPage,
     SetupLocalGamePage,
     LoginPage,
-    FirebaseTestPage,
     SignupPage
+    FirebaseTestPage,
+    PlayfieldPage
   ],
   imports: [
     BrowserModule,
@@ -40,8 +42,9 @@ import {SignupPage} from "../pages/signup/signup";
     PopoverPage,
     SetupLocalGamePage,
     LoginPage,
-    FirebaseTestPage,
     SignupPage
+    FirebaseTestPage,
+    PlayfieldPage
   ],
   providers: [
     StatusBar,

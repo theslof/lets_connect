@@ -1,0 +1,118 @@
+page-playfield {
+
+  // User info top box.
+  .playerBox {
+    h2 {
+      font-size: 2rem;
+      display: inline-block;
+      color: #488aff;
+      margin: 0 2rem 0 2rem;
+    }
+  }
+
+  // Move buttons.
+  .moveButtons {
+    ion-icon {
+      margin: 0 1rem 0 1rem;
+      font-size: 8rem;
+    }
+    .button {
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+    }
+    .buttonColorPlayerOne {
+      color: rgb(245, 171, 46);
+    }
+    .buttonColorPlayerTwo {
+      color: rgb(245, 46, 33);
+    }
+  }
+
+  // Coin main grid.
+  ion-grid.board {
+    margin: 1rem 0 0 0;
+    padding: 0rem;
+    ion-row {
+      margin: 0;
+      padding: 0;
+    }
+    ion-col {
+      left: 0.3rem !important;
+      padding: 0rem;
+      margin: 0rem 0.5rem 0.5rem 0;
+    }
+    .coin {
+      z-index: 0;
+      width: 100%;
+      height: auto;
+      padding: 0rem;
+      margin: 0;
+    }
+    .boardBackground {
+      border: 0.1rem solid #488aff;
+      box-shadow: 0 0 0 0.5rem #488aff;
+      position: absolute;
+      padding: 0;
+      margin: 0;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      z-index: 1;
+    }
+  }
+
+  // Top placing box. Where the next coin is displayed.
+  .placingBox {
+    margin: 0rem 0 0 0;
+    ion-col {
+      padding: 0rem;
+      margin-top: 1rem;
+      margin-right: 2rem;
+      margin-bottom: 7rem;
+    }
+    .coin {
+      position: absolute;
+      margin-right: 1rem;
+      z-index: 2;
+    }
+  }
+
+
+  // Coin drop animation.
+  .coinSlideInDown {
+    animation-name: slideInDown;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+  }
+  .hideCoinSlideInDown {
+    animation-duration: 0s;
+  }
+  @keyframes slideInDown {
+    0% {
+      transform: translateY(-35rem);
+      visibility: visible;
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  // Coin slide-in animation.
+  .coinSlideX {
+    animation-name: slideX;
+    animation-delay: 0s;
+    animation-duration: 0.7s;
+    animation-fill-mode: both;
+  }
+  @keyframes slideX {
+    0% {
+      transform: translateX(70rem);
+      visibility: visible;
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+}
