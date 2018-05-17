@@ -13,7 +13,7 @@ export class HomePage {
     choices: [
       {icon: "log-out", text: "Sign out"},
       ],
-    callback: this.onOptionsItemSelected
+    callback: (index: number) => {this.onOptionsItemSelected(index);}
   };
 
   constructor(public navCtrl: NavController, private popCtrl: PopoverController) {
@@ -31,6 +31,7 @@ export class HomePage {
   }
 
   public onOptionsItemSelected(id: number){
+    console.log("Callback: " + id);
     switch (id) {
       case 0:
         console.log("Sign out clicked");

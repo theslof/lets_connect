@@ -14,7 +14,8 @@ import {IonicPage, ViewController} from 'ionic-angular';
 *                                           text: "Baseball", // Text is optional
 *                                         }
 *                                        ],
-*                               callback: callbackFunction // A function that takes a number as argument
+*                               callback: (index:number) => {callbackFunction(index);}
+*                               // A function that takes an optional number as argument
 *                             }
 * When the user clicks a menu item the callback function is called with the menu item index as argument.
 * Use a switch/case to handle the callback.
@@ -45,5 +46,5 @@ export class PopoverPage {
 export interface PopoverMenuData {
   title?: string,
   choices: {icon?:string, text?:string}[],
-  callback: (number) => void
+  callback: (number?) => void
 }
