@@ -19,6 +19,7 @@ import {LoginPage} from "../pages/login/login";
 import {SignupPage} from "../pages/signup/signup";
 import {PlayfieldPage} from "../pages/playfield/playfield";
 import {AboutPage} from "../pages/about/about";
+import {ProfilePage} from "../pages/profile/profile";
 import {SplashPage} from "../pages/splash/splash";
 
 @NgModule({
@@ -32,6 +33,7 @@ import {SplashPage} from "../pages/splash/splash";
     SignupPage,
     FirebaseTestPage,
     PlayfieldPage,
+    ProfilePage,
     SplashPage
   ],
   imports: [
@@ -53,6 +55,7 @@ import {SplashPage} from "../pages/splash/splash";
     SignupPage,
     FirebaseTestPage,
     PlayfieldPage,
+    ProfilePage,
     SplashPage
   ],
   providers: [
