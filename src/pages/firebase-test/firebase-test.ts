@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 /**
  * Generated class for the FirebaseTestPage page.
@@ -15,11 +16,20 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class FirebaseTestPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+  private user : FormGroup;
+
+  constructor( private formBuilder: FormBuilder ) {
+    this.user = this.formBuilder.group({
+      email: ['', Validators.required],
+      displayName: [''],
+      highscore: ['']
+
+    });
+  }
+  logForm(){
+    console.log(this.user.value)
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad FirebaseTestPage');
-  }
 
 }

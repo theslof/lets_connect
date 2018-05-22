@@ -5,14 +5,49 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-
 <ion-content padding>
-  <ion-grid class="board">
-    <ion-row *ngFor="let row of gameGrid; let y = index">
-      <ion-col *ngFor="let item of row; let x = index">
-        <img class="coin" align-items-center src={{item}} />
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <button ion-button (click)="openFirebaseTest()">Firebase Testing</button>
+  <form [formGroup]="user" (ngSubmit)="addUser()">
+
+    <ion-item>
+      <ion-label>Email</ion-label>
+      <ion-input type="text" [(ngModel)]="email" formControlName="email" standalone></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Display name</ion-label>
+      <ion-input type="text "[(ngModel)]="displayName" formControlName="displayName" standalone></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Highscore</ion-label>
+      <ion-input type="number" [(ngModel)]="highscore" formControlName="highscore" standalone></ion-input>
+    </ion-item>
+    <button ion-button type="submit" block>Add userinfo</button>
+
+  </form>
+
+  <ion-list>
+    <ion-item>
+      <ion-input #signinEmail type="email" placeholder="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input #signinPassword type="password" placeholder="password"></ion-input>
+    </ion-item>
+    <button ion-button (click)="login(signinEmail, signinPassword)">Sign in</button>
+    <button ion-button (click)="logout()" color="danger">Sign out</button>
+  </ion-list>
+
+  <ion-list *ngIf="fuser">
+    <ion-card>
+      <ion-title>Display Name</ion-title>
+      <ion-item>{{fuser.displayName}}</ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-title>Email</ion-title>
+      <ion-item>{{fuser.email}}</ion-item>
+    </ion-card>
+  </ion-list>
+
 </ion-content>
+
+
+
+
