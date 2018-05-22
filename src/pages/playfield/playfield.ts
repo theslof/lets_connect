@@ -22,8 +22,13 @@ export class PlayfieldPage {
   playerOneTurn: boolean = true;
   placedY: number;
 
+  dummyGrid: string[][];
+  savedGridString: string;
+  testGridString: string;
+  stepX: number;
+  stepY: number;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.gameGrid = new Array(this.height);
     this.drawPlayfield();
   }
 
@@ -50,12 +55,30 @@ export class PlayfieldPage {
     return (100/this.width)*this.placeCoinPosition + "%";
   }
 
+  // Returns the hidden button size. Based on placment coin.
+  private getHiddenMoveButtonsPosition() {
+    console.log((100/this.width)*this.placeCoinPosition + "%");
+    return ((100/this.width)*this.placeCoinPosition)-10 + "%";
+  }
+
+  //
+  private getMoveRightWidth() {
+    return ((100/this.width)*this.placeCoinPosition)-10 + "%";
+  }
+
+  //
+  private getMoveLeftWidth() {
+    return 90-(((100/this.width)*this.placeCoinPosition)) + "%";
+  }
+
+
   //----------------------------------------------
   // Grid logic.
   //
 
   // Draw the main grid.
   private drawPlayfield() {
+    this.gameGrid = new Array(this.height);
     for(let i = 0; i < this.gameGrid.length; i++){
       this.gameGrid[i] = new Array(this.width);
       for(let j = 0; j < this.gameGrid[i].length; j++){
@@ -102,8 +125,10 @@ export class PlayfieldPage {
     }
   }
   private moveDown() {
-    this.dropping = true;
-    this.dropCoin(this.placeCoinPosition, this.getPlacedY(), this.getNextCoin());
+    if (this.getPlacedY() <= 5) {
+      this.dropping = true;
+      this.dropCoin(this.placeCoinPosition, this.getPlacedY(), this.getNextCoin());
+    }
   }
 
   // Aborts animation and switches to next player.
@@ -121,6 +146,53 @@ export class PlayfieldPage {
   private getNextCoin() {
     if (this.playerOneTurn) return this.coins.yellow;
     return this.coins.red;
+  }
+
+  //----------------------------------------------
+  // Dev tools
+  //
+
+  private JSONstringifyGrid() {
+    this.savedGridString = JSON.stringify(this.gameGrid);
+    console.log(this.savedGridString);
+  }
+
+  private clearGrid() {
+    this.drawPlayfield();
+    this.stepX = this.width-1;
+    this.stepY = this.height-1;
+  }
+
+  private loadGrid() {
+    this.dummyGrid = JSON.parse(this.savedGridString);
+    this.gameGrid = this.dummyGrid;
+  }
+
+  private stepFromLoadedGrid() {
+    let blank = true;
+    this.dropping = true;
+
+    while (blank && this.stepY >= 0) {
+
+      if (this.dummyGrid[this.stepY][this.stepX] !== this.coins.blank) blank = false;
+
+      if (this.stepY < this.height && this.stepY >= 0) {
+        if (this.stepX < this.width && this.stepX >= 0) {
+
+          this.placedY = this.stepY;
+          this.placeCoinPosition = this.stepX;
+          this.dropCoin(this.stepX, this.stepY, this.dummyGrid[this.stepY][this.stepX]);
+
+          console.log("X:" + this.stepX + " Y:" + this.stepY);
+          this.stepX--;
+        } else {
+          blank = true;
+          this.stepY--;
+          this.stepX = this.width - 1;
+        }
+      }
+    }
+
   }
 
 }
