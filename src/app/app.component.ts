@@ -8,6 +8,7 @@ import { HomePage } from '../pages/home/home';
 import {SignupPage} from "../pages/signup/signup";
 import {SplashPage} from "../pages/splash/splash";
 import {ProfilePage} from "../pages/profile/profile";
+import {FirebaseTestPage} from "../pages/firebase-test/firebase-test";
 @Component({
   templateUrl: 'app.html'
 })

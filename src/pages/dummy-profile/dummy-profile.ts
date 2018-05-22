@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {DummyProfilePage} from "../dummy-profile/dummy-profile";
+import { IonicStorageModule } from '@ionic/storage';
+
 
 /**
- * Generated class for the ProfilePage page.
+ * Generated class for the DummyProfilePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -11,16 +12,19 @@ import {DummyProfilePage} from "../dummy-profile/dummy-profile";
 
 @IonicPage()
 @Component({
-  selector: 'page-profile',
-  templateUrl: 'profile.html',
+  selector: 'page-dummy-profile',
+  templateUrl: 'dummy-profile.html',
 })
-export class ProfilePage {
+export class DummyProfilePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
+
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProfilePage');
+    console.log('ionViewDidLoad DummyProfilePage');
   }
+
+
 
 }
