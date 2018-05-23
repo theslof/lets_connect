@@ -16,6 +16,12 @@ page-login {
   .title {
     text-align: center;
   }
+
+  .alert {
+    color: map-get($colors, danger);
+    margin-top: 10px;
+    padding-left: 20px;
+  }
 }
 
 
