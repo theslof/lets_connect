@@ -33,6 +33,15 @@ export class FirebaseProvider {
 
   public updateUser(){
 
+    let fuser = this.firebaseAuth.auth.currentUser;
+    fuser.updateProfile({
+      displayName: '',
+      photoURL: ''
+    }).then(function (response) {
+
+    }, function (error) {
+      console.log(error);
+    });
 
   }
 
@@ -47,14 +56,18 @@ export class FirebaseProvider {
       });
   }
 
-  public signin(email: string, password: string) {
-    this.firebaseAuth.auth.signInWithEmailAndPassword(email, password).then(value => {
-      console.log("Login success!");
-      this.createNewUser();
-    })
-      .catch(err => {
-        console.log("Login error");
-      });
+  public signin(email: string, password: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.firebaseAuth.auth.signInWithEmailAndPassword(email, password).then(value => {
+        console.log("Login success!");
+        this.createNewUser();
+        resolve(true);
+      })
+        .catch(err => {
+          console.log("Login error");
+          reject(err);
+        });
+    });
   }
 
   public signout() {
@@ -93,6 +106,7 @@ export class FirebaseProvider {
       .catch(err => {
 
       });
+
 
 
   }
