@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {FirebaseProvider} from "../../providers/firebase/firebase";
+import {SignupPage} from "../signup/signup";
 
 
 
@@ -44,8 +45,7 @@ export class LoginPage {
   }
 
   public signup(){
-    console.log('Clicked on Sign Up!');
-
+    this.navCtrl.push(SignupPage);
   }
 
 
