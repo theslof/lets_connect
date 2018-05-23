@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NavController, Popover, PopoverController} from 'ionic-angular';
 import {PopoverPage, PopoverMenuData} from "../popover/popover";
 import {SetupLocalGamePage} from "../setup-local-game/setup-local-game";
+import {FirebaseProvider} from "../../providers/firebase/firebase";
 
 @Component({
   selector: 'page-home',
@@ -16,7 +17,7 @@ export class HomePage {
     callback: (index: number) => {this.onOptionsItemSelected(index);}
   };
 
-  constructor(public navCtrl: NavController, private popCtrl: PopoverController) {
+  constructor(public navCtrl: NavController, private popCtrl: PopoverController, private db:FirebaseProvider) {
     this.menu = this.popCtrl.create(PopoverPage, this.menuData);
   }
 
@@ -35,7 +36,7 @@ export class HomePage {
     switch (id) {
       case 0:
         console.log("Sign out clicked");
-        //auth.logout();
+        this.db.signout();
         break;
       default:
         console.log("Unknown choice");
