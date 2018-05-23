@@ -1,6 +1,14 @@
 page-playfield {
 
-  // User info top box.
+  .item {
+    background-image:url("data:image/svg+xml;utf8,
+  <svg xmlns='http://www.w3.org/2000/svg' version='1.1'
+       height='11px' width='60'>
+    <text x='2' y='8' fill='#FF837B' font-size='10'>DEV TOOLS</text>
+  </svg>");
+  }
+
+  // User info top box
   .playerBox {
     h2 {
       font-size: 2rem;
@@ -10,7 +18,7 @@ page-playfield {
     }
   }
 
-  // Move buttons.
+  // Move buttons
   .moveButtons {
     ion-icon {
       margin: 0 1rem 0 1rem;
@@ -28,7 +36,37 @@ page-playfield {
     }
   }
 
-  // Coin main grid.
+  .hiddenMoveButtons {
+    z-index: 2;
+    position: absolute;
+    opacity: 0.4;
+    top: 6rem;
+    left: 1rem;
+    width: 100%;
+    height: 70%;
+    .baseBox {
+      right: 6.5rem;
+      margin: 0;
+      height: 50%;
+      width: 20%;
+    }
+    .moveRight {
+      max-width: 50%;
+    }
+    .moveDown {
+      width: 20%;
+    }
+    .moveLeft {
+      max-width: 50%;
+    }
+    .nextPlayerTurn {
+      width: 100%;
+      height: 100%;
+    }
+
+  }
+
+  // Coin main grid
   ion-grid.board {
     margin: 1rem 0 0 0;
     padding: 0rem;
@@ -62,7 +100,7 @@ page-playfield {
     }
   }
 
-  // Top placing box. Where the next coin is displayed.
+  // Top placing box. Where the next coin is displayed
   .placingBox {
     margin: 0rem 0 0 0;
     ion-col {
@@ -79,7 +117,7 @@ page-playfield {
   }
 
 
-  // Coin drop animation.
+  // Coin drop animation
   .coinSlideInDown {
     animation-name: slideInDown;
     animation-duration: 1s;
@@ -98,7 +136,7 @@ page-playfield {
     }
   }
 
-  // Coin slide-in animation.
+  // Coin slide-in animation
   .coinSlideX {
     animation-name: slideX;
     animation-delay: 0s;
