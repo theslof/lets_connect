@@ -22,6 +22,7 @@ export class LoginPage {
   email:string = "";
   password:string = "";
   loggingIn:boolean = false;
+  loginError:boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db:FirebaseProvider) {
   }
@@ -39,6 +40,9 @@ export class LoginPage {
       this.password = "";
     }).catch(err => {
       this.loggingIn = false;
+      console.log("Login failed!");
+      this.loginError = true;
+
       // Inform the user that error occurred
     });
     //this.navCtrl.push(FirebaseTestPage);
