@@ -7,32 +7,34 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title class="title">Profile</ion-title>
+    <ion-title>Profile</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <div class="style center">
 
   <div user-profile-header>
 <ion-item>
-  <img src="../assets/imgs/avatars/cat.svg"/>
+  <img src="../assets/imgs/avatars/{{avatar}}.svg"/>
 </ion-item>
 
   </div>
 
   <div user-profile-sub-header>
    <ion-item>
-     Gina
+     <h1>{{user.displayName}}</h1>
      <ion-icon name="person" item-start></ion-icon>
    </ion-item>
      <ion-item>
-     345435 p
+      {{user.highscore}}
      <ion-icon name="ios-trophy" item-start></ion-icon>
 
    </ion-item>
   </div>
 
+  </div>
 
 </ion-content>
