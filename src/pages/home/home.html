@@ -28,3 +28,20 @@
     </ion-row>
   </div>
 </ion-content>
+
+
+<div [formGroup]="userProfile" (ngSubmit)="updateUser()">
+
+
+  <ion-item>
+    <ion-label>Display name</ion-label>
+    <ion-input type="text "[(ngModel)]="displayName" formControlName="displayName" standalone></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Highscore</ion-label>
+    <ion-input type="number" [(ngModel)]="highscore" formControlName="highscore" standalone></ion-input>
+  </ion-item>
+  <button ion-button type="submit" block>Add userinfo</button>
+
+</div>
+

@@ -6,6 +6,7 @@ import {AngularFireAuth} from "angularfire2/auth";
 import {AngularFireAuthProvider} from "angularfire2/auth";
 import {default as firebase, User as FUser} from "firebase/app";
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
+import set = Reflect.set;
 
 /*
   Generated class for the FirebaseProvider provider.
@@ -31,8 +32,28 @@ export class FirebaseProvider {
     //return this.firebaseDb.collection("Users").doc(email);
   }
 
-  public updateUser(){
+  public updateUser(uid: string, displayName ?:string, profileImage ?: string) {
+    // måste ha uid, ta in alla parametrar, om variabel är null, ändra inte.
 
+
+    let user = {};
+
+    user["uid"] = uid;
+    if(displayName)
+      user["displayName"] = displayName;
+
+    if(profileImage)
+      user["profileImage"] = profileImage;
+
+    this.firebaseDb.collection('Users').doc(uid).set(user, {merge:true}).then(value => {
+      // success
+      console.log('Success!');
+    }).catch(err => {
+      // error
+      console.log(err.toString());
+    })
+
+/*
     let fuser = this.firebaseAuth.auth.currentUser;
     fuser.updateProfile({
       displayName: '',
@@ -41,19 +62,22 @@ export class FirebaseProvider {
 
     }, function (error) {
       console.log(error);
-    });
+    });*/
 
   }
 
   // create the user and signs in automatically.
-  public signup(email: string, password: string) {
+  public signup(email: string, password: string) : Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
     this.firebaseAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(email, password)
       .then(response => {
         this.createNewUser();
+        resolve(true);
       })
       .catch(err => {
-
+        reject(err);
       });
+  });
   }
 
   public signin(email: string, password: string): Promise<boolean> {
