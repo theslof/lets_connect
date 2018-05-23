@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
-import {HomePage} from "../home/home";
+import {FirebaseProvider} from "../../providers/firebase/firebase";
 
 /**
  * Generated class for the SignupPage page.
@@ -16,10 +16,12 @@ import {HomePage} from "../home/home";
 })
 export class SignupPage {
 
+  email:string = "";
   password:string = "";
   confirmpassword:string = "";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
+              private db: FirebaseProvider) {
   }
 
   ionViewDidLoad() {
@@ -27,7 +29,7 @@ export class SignupPage {
   }
 
   cancel() {
-    this.navCtrl.push(HomePage);
+    this.navCtrl.pop();
 
   }
 
@@ -41,8 +43,8 @@ export class SignupPage {
     alert.present();
 */
     if(this.password == this.confirmpassword){
-      console.log('Correct')
-      alert('Hello');
+      console.log('Correct');
+      this.db.signup(this.email, this.password);
 
 
     } else {
