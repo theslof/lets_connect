@@ -16,40 +16,14 @@ import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 @Injectable()
 
 export class FirebaseProvider {
-  public data: any;
-  public userProfile: any;
-  public password: any;
-  public fireAuth: any;
-  public userText: string = "";
-  public userInput: string = "";
-  items: Observable<User[]>;
-
-
-  constructor(public firebaseDb: AngularFirestore, private firebaseAuth: AngularFireAuth) {
-
-  }
-
-  public saveUser() {
-    this.firebaseDb.collection('Users').doc('testUser').set({text: this.userText})
-  }
-
-  public addUser(user: User): any {
-//    if (this.userInput.replace(/\s/g, '') == "")
-//      return;
-
-//    let item = {email: this.userInput, displayName:this.userInput, profileImage:this.userInput, highscore:222} as User;
-
-//    this.userInput = "";
-    console.log('nu händer något');
-    return this.firebaseDb.collection('Users').doc(user.uid).set(user, {merge: true});
-
-  }
+  constructor(public firebaseDb: AngularFirestore, private firebaseAuth: AngularFireAuth) {}
 
   public addGame(game: Game): any {
     console.log('spelfunktion fungerar');
     return this.firebaseDb.collection('Games').add(game);
   }
 
+  // returns user as an Observable
   public getUser(uid: string): Observable<User> {
     //return this.firebaseDb.collection('Users').valueChanges();
     return this.firebaseDb.collection('Users').doc(uid).valueChanges() as Observable<User>;
@@ -57,36 +31,12 @@ export class FirebaseProvider {
     //return this.firebaseDb.collection("Users").doc(email);
   }
 
-  /* loginUserService(): any{
-     return this.fireAuth.collection('testItems').valueOf('text');
-
-
-
-   }*/
-
-
-  /* ionViewDidLoad() {
-
-
-     let myObservable = Observable.create(observer => {
-       console.log("tjena");
-       observer.next("hello");
-       setInterval(() => {
-         observer.next("hello");
-       }, 1000);
-
-     });
-     myObservable.subscribe(() => {
-       console.log();
-     });
-
-
-   }*/
-
   public updateUser(){
+
 
   }
 
+  // create the user and signs in automatically.
   public signup(email: string, password: string) {
     this.firebaseAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(email, password)
       .then(response => {
@@ -111,6 +61,7 @@ export class FirebaseProvider {
     this.firebaseAuth.auth.signOut();
   }
 
+  // Method for creating new user. If the user does not exist in the database, it's created.
   private createNewUser() {
     let fuser = this.firebaseAuth.auth.currentUser;
     if (!fuser)
