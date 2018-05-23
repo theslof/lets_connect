@@ -3,7 +3,8 @@ import {NavController, Popover, PopoverController} from 'ionic-angular';
 import {PopoverPage, PopoverMenuData} from "../popover/popover";
 import {SetupLocalGamePage} from "../setup-local-game/setup-local-game";
 import {FirebaseProvider} from "../../providers/firebase/firebase";
-import {User} from "../../lib/interfaces";
+import {ProfilePage} from "../profile/profile";
+import {AngularFireAuth} from "angularfire2/auth";
 
 @Component({
   selector: 'page-home',
@@ -11,25 +12,19 @@ import {User} from "../../lib/interfaces";
 })
 export class HomePage {
   menu: Popover;
-  displayName: string = "";
-  profileImage: string = "";
-  user: User;
   menuData: PopoverMenuData = {
     choices: [
+      {icon: "person", text: "My Profile"},
       {icon: "log-out", text: "Sign out"},
-      ],
-    callback: (index: number) => {this.onOptionsItemSelected(index);}
+    ],
+    callback: (index: number) => {
+      this.onOptionsItemSelected(index);
+    }
   };
 
-  constructor(public navCtrl: NavController, private popCtrl: PopoverController, private db:FirebaseProvider) {
+  constructor(public navCtrl: NavController, private popCtrl: PopoverController, private db: FirebaseProvider,
+              private auth: AngularFireAuth) {
     this.menu = this.popCtrl.create(PopoverPage, this.menuData);
-    this.db.getCurrentUser().subscribe((value: User)=>{
-     if(value) {
-       this.user = value;
-       this.profileImage = value.profileImage;
-       this.displayName = value.displayName;
-     }
-    })
   }
 
   public startLocalGame() {
@@ -42,10 +37,14 @@ export class HomePage {
     //this.navCtrl.push(SetupOnlineGamePage);
   }
 
-  public onOptionsItemSelected(id: number){
+  public onOptionsItemSelected(id: number) {
     console.log("Callback: " + id);
     switch (id) {
       case 0:
+        console.log("Profile clicked");
+        this.navCtrl.push(ProfilePage, {uid: this.auth.auth.currentUser.uid})
+        break;
+      case 1:
         console.log("Sign out clicked");
         this.db.signout();
         break;
@@ -53,11 +52,5 @@ export class HomePage {
         console.log("Unknown choice");
     }
   }
-
-  public updateUser(){
-    this.db.updateDisplayName(this.user.uid, this.displayName);
-    this.db.updateProfileImage(this.user.uid, this.profileImage);
-  }
-
 
 }
