@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {FirebaseProvider} from "../../providers/firebase/firebase";
+import {SignupPage} from "../signup/signup";
 
 
 
@@ -17,22 +19,33 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  email:string = "";
+  password:string = "";
+  loggingIn:boolean = false;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private db:FirebaseProvider) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+  ionViewDidEnter() {
+    this.loggingIn = false;
   }
 
 
   public login(){
+    this.loggingIn = true;
+    this.db.signin(this.email, this.password).then((success:boolean) => {
+      this.loggingIn = false;
+      this.email = "";
+      this.password = "";
+    }).catch(err => {
+      this.loggingIn = false;
+      // Inform the user that error occurred
+    });
     //this.navCtrl.push(FirebaseTestPage);
-    alert("You have logged in");
   }
 
   public signup(){
-    console.log('Clicked on Sign Up!');
-
+    this.navCtrl.push(SignupPage);
   }
 
 

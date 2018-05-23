@@ -22,19 +22,19 @@
     <ion-list>
       <ion-item>
         <ion-label color="primary" floating>E-mail</ion-label>
-        <ion-input type="email" value=""></ion-input>
+        <ion-input [(ngModel)]="email" type="email" [disabled]="loggingIn"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label color="primary" floating>Password</ion-label>
-        <ion-input [(ngModel)]="password" type="password" value=""></ion-input>
+        <ion-input [(ngModel)]="password" type="password" [disabled]="loggingIn"></ion-input>
       </ion-item>
 
 
       <div padding>
 
-      <button ion-button block (click)="login()">Log in</button>
-      <button ion-button color="secondary" block (click)="signup()">Create Account</button>
+      <button ion-button block (click)="login()" [disabled]="loggingIn">Log in</button>
+      <button ion-button color="secondary" block (click)="signup()" [disabled]="loggingIn">Create Account</button>
 
       </div>
     </ion-list>
