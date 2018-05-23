@@ -7,10 +7,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import {AngularFirestoreModule} from "angularfire2/firestore";
-import {AngularFireAuthModule} from "angularfire2/auth";
+import {AngularFireAuth, AngularFireAuthModule} from "angularfire2/auth";
 import {AngularFireModule} from "angularfire2";
 import {FIREBASE_CONFIG} from "../lib/firebaseConfig";
 import {FirebaseTestPage} from "../pages/firebase-test/firebase-test";
+import {FirebaseProvider} from '../providers/firebase/firebase';
+import {AngularFireDatabaseModule} from "angularfire2/database";
 import {PopoverPage} from "../pages/popover/popover";
 import {SetupLocalGamePage} from "../pages/setup-local-game/setup-local-game";
 import {LoginPage} from "../pages/login/login";
@@ -35,7 +37,8 @@ import {AboutPage} from "../pages/about/about";
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
-    AngularFirestoreModule.enablePersistence() //.enablePersistence() used for offline storage
+    AngularFirestoreModule.enablePersistence(), //.enablePersistence() used for offline storage
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -52,7 +55,8 @@ import {AboutPage} from "../pages/about/about";
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    FirebaseProvider, AngularFireAuth
   ]
 })
 export class AppModule {}
