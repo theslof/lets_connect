@@ -9,7 +9,7 @@
 
 <ion-content padding overflow-scroll="true">
 
-  <ion-item no-lines text-center>
+  <ion-item no-lines text-center *ngIf="true">
     <button item-end ion-button small round (click)="nextPlayerTurn()">Switch</button>
     <button item-end ion-button small round (click)="clearGrid()">Clear</button>
     <button item-end ion-button small round (click)="JSONstringifyGrid()">Save</button>
@@ -29,11 +29,10 @@
       <img class="coin coinSlideX" *ngIf="!dropping" [style.width]=getCoinWidthStyle() align-items-center src={{getNextCoin()}}/>
     </ion-col>
 
-
-    <ion-row class="hiddenMoveButtons">
-      <ion-col *ngIf="!dropping" [style.left]=getHiddenMoveButtonsPosition()>
+    <ion-row class="hiddenMoveButtons" *ngIf="false" fixed>
+      <ion-col *ngIf="!dropping" [style.left]=getHiddenMoveButtonsPosition() fixed>
         <button outline class="moveRight baseBox" ion-button (click)="moveRight()" [style.width]=getMoveRightWidth()></button>
-        <button outline class="moveDown baseBox" ion-button (click)="moveDown()"></button>
+        <button *ngIf="false" outline class="moveDown baseBox" ion-button (click)="moveDown()"></button>
         <button outline class="moveLeft baseBox" ion-button (click)="moveLeft()" [style.width]=getMoveLeftWidth()></button>
       </ion-col>
       <ion-col text-center *ngIf="dropping">
