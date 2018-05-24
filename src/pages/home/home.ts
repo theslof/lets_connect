@@ -5,6 +5,7 @@ import {SetupLocalGamePage} from "../setup-local-game/setup-local-game";
 import {FirebaseProvider} from "../../providers/firebase/firebase";
 import {ProfilePage} from "../profile/profile";
 import {AngularFireAuth} from "angularfire2/auth";
+import {AboutPage} from "../about/about";
 
 @Component({
   selector: 'page-home',
@@ -15,6 +16,7 @@ export class HomePage {
   menuData: PopoverMenuData = {
     choices: [
       {icon: "person", text: "My Profile"},
+      {icon: "about", text: "About"},
       {icon: "log-out", text: "Sign out"},
     ],
     callback: (index: number) => {
@@ -45,6 +47,10 @@ export class HomePage {
         this.navCtrl.push(ProfilePage, {uid: this.auth.auth.currentUser.uid})
         break;
       case 1:
+        console.log("About clicked");
+        this.navCtrl.push(AboutPage);
+        break;
+      case 2:
         console.log("Sign out clicked");
         this.db.signout();
         break;
