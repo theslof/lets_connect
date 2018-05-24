@@ -20,6 +20,7 @@ export class SignupPage {
   password:string = "";
   confirmpassword:string = "";
   passError: boolean = false;
+  errorMessage: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
               private db: FirebaseProvider) {
@@ -45,11 +46,16 @@ export class SignupPage {
 */
     if(this.password == this.confirmpassword){
       console.log('Correct');
-      this.db.signup(this.email, this.password);
+      this.db.signup(this.email, this.password).then(value => {
+        //Success
+      }).catch(err => {
+        console.log(err.toString());
+        this.errorMessage = err.toString();
+      });
 
 
     } else {
-      this.passError = true;
+      this.errorMessage = "Password doesn´t match";
   console.log('Wrong')
 
     }

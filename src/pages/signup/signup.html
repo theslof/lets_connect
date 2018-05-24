@@ -41,9 +41,6 @@
       <button *ngIf="showPass" ion-button clear color="blue" type="button" item-right
               (click)="showPassword()"> <ion-icon name="eye"></ion-icon></button>
 
-      <div class="wrongpass" *ngIf="passError">
-        <ion-icon name="alert"> Password doesn´t match</ion-icon>
-      </div>
 
 
     </ion-item>
@@ -55,6 +52,9 @@
 
     </ion-item>
 
+    <div class="alert" *ngIf="errorMessage">
+      <ion-icon name="alert">{{errorMessage}}</ion-icon>
+    </div>
 
     <!--<ion-item>
     <ion-label floating>Confirm password</ion-label>

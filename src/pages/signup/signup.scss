@@ -8,8 +8,10 @@ page-signup {
     margin: auto;
   }
 
-  .wrongpass {
-    color: red;
+  .alert {
+    color: map-get($colors, danger);
+    margin-top: 20px;
+    margin-left: 20px;
   }
 
 
