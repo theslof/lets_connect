@@ -1,15 +1,17 @@
 page-signup {
 
-.title {
-  text-align: center;
-}
-
   .style {
     max-width: 500px;
   }
 
   .center {
     margin: auto;
+  }
+
+  .alert {
+    color: map-get($colors, danger);
+    margin-top: 20px;
+    margin-left: 20px;
   }
 
 
