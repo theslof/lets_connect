@@ -3,6 +3,7 @@ import {NavController, Popover, PopoverController} from 'ionic-angular';
 import {PopoverPage, PopoverMenuData} from "../popover/popover";
 import {SetupLocalGamePage} from "../setup-local-game/setup-local-game";
 import {FirebaseProvider} from "../../providers/firebase/firebase";
+import {User} from "../../lib/interfaces";
 
 @Component({
   selector: 'page-home',
@@ -10,6 +11,9 @@ import {FirebaseProvider} from "../../providers/firebase/firebase";
 })
 export class HomePage {
   menu: Popover;
+  displayName: string = "";
+  profileImage: string = "";
+  user: User;
   menuData: PopoverMenuData = {
     choices: [
       {icon: "log-out", text: "Sign out"},
@@ -19,6 +23,13 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, private popCtrl: PopoverController, private db:FirebaseProvider) {
     this.menu = this.popCtrl.create(PopoverPage, this.menuData);
+    this.db.getCurrentUser().subscribe((value: User)=>{
+     if(value) {
+       this.user = value;
+       this.profileImage = value.profileImage;
+       this.displayName = value.displayName;
+     }
+    })
   }
 
   public startLocalGame() {
@@ -42,5 +53,11 @@ export class HomePage {
         console.log("Unknown choice");
     }
   }
+
+  public updateUser(){
+    this.db.updateDisplayName(this.user.uid, this.displayName);
+    this.db.updateProfileImage(this.user.uid, this.profileImage);
+  }
+
 
 }
