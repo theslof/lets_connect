@@ -56,6 +56,7 @@ export class SignupPage {
 
     } else {
       this.errorMessage = "Password doesn´t match";
+      this.passError = true;
   console.log('Wrong')
 
     }
