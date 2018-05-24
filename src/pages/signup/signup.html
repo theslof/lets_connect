@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title class="title">Sign up</ion-title>
+    <ion-title>Sign up</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -19,8 +19,8 @@
   <ion-list>
 
     <ion-item>
-      <ion-label color="primary" floating>Username</ion-label>
-      <ion-input [(ngModel)]="username" type="text" value=""></ion-input>
+      <ion-label color="primary" floating>E-mail</ion-label>
+      <ion-input type="email" [(ngModel)]="email"></ion-input>
     </ion-item>
 
 
@@ -41,6 +41,11 @@
       <button *ngIf="showPass" ion-button clear color="blue" type="button" item-right
               (click)="showPassword()"> <ion-icon name="eye"></ion-icon></button>
 
+      <div class="wrongpass" *ngIf="passError">
+        <ion-icon name="alert"> Password doesn´t match</ion-icon>
+      </div>
+
+
     </ion-item>
 
     <ion-item>
@@ -59,11 +64,6 @@
       </button>
     </ion-item>
 -->
-
-    <ion-item>
-      <ion-label color="primary" floating>E-mail</ion-label>
-      <ion-input type="email" [(ngModel)]="email"></ion-input>
-    </ion-item>
 
     <div padding>
     <button ion-button color="danger" (click)="cancel()" large>Cancel</button>
