@@ -46,14 +46,17 @@ export class FirebaseProvider {
   }
 
   // create the user and signs in automatically.
-  public signup(email: string, password: string) {
-    this.firebaseAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(email, password)
-      .then(response => {
-        this.createNewUser();
-      })
-      .catch(err => {
-
-      });
+  public signup(email: string, password: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.firebaseAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(email, password)
+        .then(response => {
+          this.createNewUser();
+          resolve(true);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
   }
 
   public signin(email: string, password: string): Promise<boolean> {

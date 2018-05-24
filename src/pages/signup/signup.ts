@@ -19,6 +19,7 @@ export class SignupPage {
   email:string = "";
   password:string = "";
   confirmpassword:string = "";
+  passError: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
               private db: FirebaseProvider) {
@@ -48,6 +49,7 @@ export class SignupPage {
 
 
     } else {
+      this.passError = true;
   console.log('Wrong')
 
     }
