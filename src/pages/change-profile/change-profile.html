@@ -16,8 +16,8 @@
 
 <div class="img">
 
-<img *ngFor="let avatar of avatars" src="../assets/imgs/avatars/{{avatar}}.svg" margin="20px" width="150px" height="auto">
-
+<img (click)="selected(avatar)" *ngFor="let avatar of avatars" src="../assets/imgs/avatars/{{avatar}}.svg"
+     margin="20px" width="150px" height="auto">
 </div>
 
 </ion-content>

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {HomePage} from "../home/home";
 import {User} from "../../lib/interfaces";
 import {FirebaseProvider} from "../../providers/firebase/firebase";
+import {ChangeProfilePage} from "../change-profile/change-profile";
 
 @IonicPage()
 @Component({
@@ -29,4 +30,7 @@ export class ProfilePage {
     this.navCtrl.push(HomePage);
   }
 
+  public editProfile(){
+    this.navCtrl.push(ChangeProfilePage, {user:this.user});
+  }
 }

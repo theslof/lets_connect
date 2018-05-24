@@ -9,7 +9,7 @@ import {ChangeProfilePage} from "../pages/change-profile/change-profile";
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any = ChangeProfilePage;
+  rootPage: any = SplashPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

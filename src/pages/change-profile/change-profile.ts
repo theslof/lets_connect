@@ -1,5 +1,8 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {HomePage} from "../home/home";
+import {FirebaseProvider} from "../../providers/firebase/firebase";
+import {User} from "../../lib/interfaces";
 
 /**
  * Generated class for the ChangeProfilePage page.
@@ -15,6 +18,7 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 })
 export class ChangeProfilePage {
 
+  user:User;
   avatars: string[] = [
       'cat',
       'chicken',
@@ -28,11 +32,17 @@ export class ChangeProfilePage {
     'placeholder',
     ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private db:FirebaseProvider) {
+    this.user = this.navParams.get('user');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChangeProfilePage');
+  }
+
+  public selected(avatar: string) {
+    this.db.updateProfileImage(this.user.uid, avatar);
+    this.navCtrl.pop();
   }
 
 }
