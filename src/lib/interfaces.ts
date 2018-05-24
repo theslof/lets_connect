@@ -9,13 +9,14 @@ export interface User{
   highscore:number;
 }
 export interface Game{
+  gid: string,
   type: string,
   player1: string,
   player2: string,
   state: string,
   activePlayer: number;
 }
-export interface Moves{
+export interface Move{
   move:number,
   player:number,
   x: number,

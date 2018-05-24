@@ -19,9 +19,10 @@ export class FirebaseProvider {
   constructor(public firebaseDb: AngularFirestore, private firebaseAuth: AngularFireAuth) {
   }
 
-  public createGame(game: Game): any {
+  public createGame(game: Game): Promise<void> {
     console.log('spelfunktion fungerar');
-    return this.firebaseDb.collection('Games').add(game);
+    game.gid = this.firebaseDb.createId();
+    return this.firebaseDb.collection('Games').doc(game.gid).set(game);
   }
 
   // returns user as an Observable
@@ -131,6 +132,14 @@ export class FirebaseProvider {
   public getCurrentUser(): Observable<User>{
     return this.getUser(this.firebaseAuth.auth.currentUser.uid);
   }
+
+
+  /* TODO
+      set/update Highscore(uid, score)
+      addToHighscore(uid, scoreDifference) // Add a value to user highscore
+
+
+   */
 }
 
 
