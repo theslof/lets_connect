@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection} from "angularfire2/firestore";
+import {AngularFirestore} from "angularfire2/firestore";
 import {Observable} from "rxjs/Observable";
 import {Game, User} from "../../lib/interfaces";
 import {AngularFireAuth} from "angularfire2/auth";
-import {AngularFireAuthProvider} from "angularfire2/auth";
 import {default as firebase, User as FUser} from "firebase/app";
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 

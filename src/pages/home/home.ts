@@ -16,7 +16,7 @@ export class HomePage {
   menuData: PopoverMenuData = {
     choices: [
       {icon: "person", text: "My Profile"},
-      {icon: "about", text: "About"},
+      {icon: "information-circle", text: "About"},
       {icon: "log-out", text: "Sign out"},
     ],
     callback: (index: number) => {
@@ -44,7 +44,7 @@ export class HomePage {
     switch (id) {
       case 0:
         console.log("Profile clicked");
-        this.navCtrl.push(ProfilePage, {uid: this.auth.auth.currentUser.uid})
+        this.navCtrl.push(ProfilePage, {uid: this.auth.auth.currentUser.uid});
         break;
       case 1:
         console.log("About clicked");
