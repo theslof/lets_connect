@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="300"
+   height="300"
+   version="1.1"
+   id="svg17"
+   sodipodi:docname="profile-image-placeholder.svg"
+   inkscape:version="0.92.2 5c3e80d, 2017-08-06">
+  <defs
+     id="defs21" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1440"
+     inkscape:window-height="855"
+     id="namedview19"
+     showgrid="false"
+     inkscape:zoom="2.1473194"
+     inkscape:cx="149.48871"
+     inkscape:cy="149.48871"
+     inkscape:window-x="0"
+     inkscape:window-y="1"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg17" />
+  <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+  <path
+     style="fill:#cccccc;fill-opacity:1;stroke:none;stroke-width:1.02608693;stroke-opacity:1"
+     d="M 150 0 A 150 150 0 0 0 0 150 A 150 150 0 0 0 150 300 A 150 150 0 0 0 300 150 A 150 150 0 0 0 150 0 z M 150 25 A 75 75 0 0 1 225 100 A 75 75 0 0 1 150 175 A 75 75 0 0 1 75 100 A 75 75 0 0 1 150 25 z M 100.26953 175 L 100.35742 175 A 90 90 0 0 0 150 190 A 90 90 0 0 0 199.65039 175 L 200.80859 175 C 228.65785 175 251.07812 197.42028 251.07812 225.26953 L 251.07812 239.30469 A 135 135 0 0 1 150 285 A 135 135 0 0 1 50 240.46289 L 50 225.26953 C 50 197.42028 72.420282 175 100.26953 175 z "
+     id="path4537" />
+  <metadata
+     id="metadata24">image/svg+xml<rdf:RDF>
+  <cc:Work
+     rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type
+       rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+    <dc:title></dc:title>
+  </cc:Work>
+</rdf:RDF>
+</metadata>
+  <circle
+     style="fill:#cccccc;fill-opacity:0;stroke:#000000;stroke-width:1.00342023"
+     stroke-opacity="null"
+     cx="150"
+     cy="150"
+     id="svg_8"
+     r="0" />
+</svg>
