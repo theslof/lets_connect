@@ -139,7 +139,12 @@ export class FirebaseProvider {
       set/update Highscore(uid, score)
       addToHighscore(uid, scoreDifference) // Add a value to user highscore
 
+      updateGameState(gid, state)
+      updateGameActivePlayer(gid, player) // Player = 0 or 1
 
+      getActiveGames(uid): Observable<Game[]>  // where state != over?
+      getMoves(gid): Observable<Move[]> // collection("Games").doc(gid).collection("Moves")
+      addMove(gid, move:Move)
    */
 }
 
