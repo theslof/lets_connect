@@ -30,10 +30,13 @@
         <ion-input [(ngModel)]="password" type="password" [disabled]="loggingIn"></ion-input>
       </ion-item>
 
+      <div class="alert" *ngIf="loginError">
+       <ion-icon name="alert"></ion-icon> Incorrect E-mail or Password
+      </div>
 
       <div padding>
 
-      <button ion-button block (click)="login()" [disabled]="loggingIn">Log in</button>
+      <button ion-button large block (click)="login()" [disabled]="loggingIn">Log in</button>
       <button ion-button color="secondary" block (click)="signup()" [disabled]="loggingIn">Create Account</button>
 
       </div>
