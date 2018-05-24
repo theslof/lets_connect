@@ -20,6 +20,7 @@ import {PlayfieldPage} from "../pages/playfield/playfield";
 import {AboutPage} from "../pages/about/about";
 import {ProfilePage} from "../pages/profile/profile";
 import {SplashPage} from "../pages/splash/splash";
+import {ChangeProfilePage} from "../pages/change-profile/change-profile";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {SplashPage} from "../pages/splash/splash";
     SignupPage,
     PlayfieldPage,
     ProfilePage,
-    SplashPage
+    SplashPage,
+    ChangeProfilePage
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,8 @@ import {SplashPage} from "../pages/splash/splash";
     SignupPage,
     PlayfieldPage,
     ProfilePage,
-    SplashPage
+    SplashPage,
+    ChangeProfilePage
   ],
   providers: [
     StatusBar,
