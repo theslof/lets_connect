@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {IonicPage, ViewController} from 'ionic-angular';
 
 /*
@@ -45,6 +45,6 @@ export class PopoverPage {
 
 export interface PopoverMenuData {
   title?: string,
-  choices: {icon?:string, text?:string}[],
+  choices: { icon?: string, text?: string }[],
   callback: (number?) => void
 }

@@ -1,19 +1,10 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection} from "angularfire2/firestore";
 import {Observable} from "rxjs/Observable";
 import {Game, User} from "../../lib/interfaces";
+import {AngularFirestore} from "angularfire2/firestore";
 import {AngularFireAuth} from "angularfire2/auth";
-import {AngularFireAuthProvider} from "angularfire2/auth";
-import {default as firebase, User as FUser} from "firebase/app";
-import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
+import {DocumentSnapshot} from "@firebase/firestore"
 
-
-/*
-  Generated class for the FirebaseProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 
 export class FirebaseProvider {
@@ -28,9 +19,7 @@ export class FirebaseProvider {
 
   // returns user as an Observable
   public getUser(uid: string): Observable<User> {
-    //return this.firebaseDb.collection('Users').valueChanges();
     return this.firebaseDb.collection('Users').doc(uid).valueChanges() as Observable<User>;
-
   }
 
   // method for updating your displayname. Don't change if value is null.
@@ -130,7 +119,7 @@ export class FirebaseProvider {
   }
 
 // method for getting current user.
-  public getCurrentUser(): Observable<User>{
+  public getCurrentUser(): Observable<User> {
     return this.getUser(this.firebaseAuth.auth.currentUser.uid);
   }
 

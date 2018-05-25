@@ -1,6 +1,3 @@
-export interface TextInterface{
-  text:string;
-}
 export interface User{
   uid: string,
   email:string,
