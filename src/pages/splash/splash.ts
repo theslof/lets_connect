@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {AngularFireAuth} from "angularfire2/auth";
 import {HomePage} from "../home/home";
 import {LoginPage} from "../login/login";
@@ -11,12 +11,12 @@ import {LoginPage} from "../login/login";
 })
 export class SplashPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private firebase:AngularFireAuth) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private firebase: AngularFireAuth) {
     this.firebase.authState.subscribe(auth => {
-      if(auth){
+      if (auth) {
         // User is logged in
         navCtrl.setRoot(HomePage);
-      }else{
+      } else {
         // User is not logged in
         navCtrl.setRoot(LoginPage);
       }

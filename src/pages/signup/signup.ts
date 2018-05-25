@@ -1,13 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {FirebaseProvider} from "../../providers/firebase/firebase";
-
-/**
- * Generated class for the SignupPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -16,9 +9,9 @@ import {FirebaseProvider} from "../../providers/firebase/firebase";
 })
 export class SignupPage {
 
-  email:string = "";
-  password:string = "";
-  confirmpassword:string = "";
+  email: string = "";
+  password: string = "";
+  confirmpassword: string = "";
   passError: boolean = false;
   errorMessage: string;
 
@@ -44,7 +37,7 @@ export class SignupPage {
 
     alert.present();
 */
-    if(this.password == this.confirmpassword){
+    if (this.password == this.confirmpassword) {
       console.log('Correct');
       this.db.signup(this.email, this.password).then(value => {
         //Success
@@ -56,8 +49,7 @@ export class SignupPage {
 
     } else {
       this.errorMessage = "Password doesn´t match";
-      this.passError = true;
-  console.log('Wrong')
+  this.passError = true;console.log('Wrong')
 
     }
 
@@ -70,12 +62,12 @@ export class SignupPage {
   public showPassword() {
     this.showPass = !this.showPass;
 
-    if(this.showPass){
+    if (this.showPass) {
       this.type = 'text';
     } else {
       this.type = 'password';
     }
-}
+  }
 
   public string = 'confirmPassword';
   public showString = false;
@@ -84,7 +76,7 @@ export class SignupPage {
 
     this.showPass = !this.showPass;
 
-    if(this.showString){
+    if (this.showString) {
       this.type = 'text';
     } else {
       this.string = 'confirmPassword';

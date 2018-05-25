@@ -1,9 +1,3 @@
-<!--
-  Generated template for the LoginPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -17,7 +11,7 @@
 <ion-content padding>
   <div class="login-container center">
     <img src="../assets/imgs/lets_connect_logo.png"/>
-  <br>
+    <br/>
 
     <ion-list>
       <ion-item>
@@ -31,13 +25,14 @@
       </ion-item>
 
       <div class="alert" *ngIf="loginError">
-       <ion-icon name="alert"></ion-icon> Incorrect E-mail or Password
+        <ion-icon name="alert"></ion-icon>
+        Incorrect E-mail or Password
       </div>
 
       <div padding>
 
-      <button ion-button large block (click)="login()" [disabled]="loggingIn">Log in</button>
-      <button ion-button color="secondary" block (click)="signup()" [disabled]="loggingIn">Create Account</button>
+        <button ion-button large block (click)="login()" [disabled]="loggingIn">Log in</button>
+        <button ion-button color="secondary" block (click)="signup()" [disabled]="loggingIn">Create Account</button>
 
       </div>
     </ion-list>
