@@ -35,12 +35,18 @@
     </ion-row>
     <ion-row>
       <button ion-button large outline block class="user-card" (click)="changeOpponentName()">
-          <ion-icon name="custom-profile" margin-right></ion-icon>
+        <ion-icon name="custom-profile" margin-right></ion-icon>
         {{opponentName}}
       </button>
     </ion-row>
     <ion-row>
-      <button large block ion-button class="margin-top-50" (click)="startGame()">Start game</button>
+      <button large block ion-button class="margin-top-50" (click)="startGame()" [disabled]="loading">
+        <span *ngIf="!loading; else loading_button">Start game</span>
+      </button>
     </ion-row>
   </div>
 </ion-content>
+
+<ng-template #loading_button>
+  <ion-spinner></ion-spinner>
+</ng-template>
