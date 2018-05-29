@@ -131,55 +131,12 @@ export class FirebaseProvider {
   }
 
 // method for getting current user.
-  public getCurrentUser(): Observable<User>{
+  public getCurrentUser(): Observable<User> {
     return this.getUser(this.firebaseAuth.auth.currentUser.uid);
   }
 
 
-  public getHighscore(uid: string, highscore: number): Observable<User>{
-    //return this.firebaseDb.collection('Users').doc(uid).valueChanges() as Observable<User>;
-    return this.firebaseDb.collection('Users').doc(highscore.toString()).valueChanges() as Observable<User>;
-  }
-
-  /*public setHighscore(uid: string, highscore: number): Observable<User>{
-      this.firebaseDb.firestore.doc.ref.set(highscore).then(_ => console.log('set!'));
-      }*/
-
-  /*setHighscore (uid: string, highscore: number): Observable<User> {
-    let highscoreApply = this.firebaseDb (uid, highscore) .ref ().child ('Users');
-    highscoreApply.set ({
-      var1: ''
-    });
-  }*/
-
-  private setHighscore() {
-
-    let user = this.firebaseAuth.auth.currentUser;
-    if (!user)
-      return;
-
-    this.firebaseDb.collection('Users').doc(user.uid).ref.get().then((doc: DocumentSnapshot) => {
-      let user: User;
-
-      if (doc.exists) {
-        user = doc.data() as User;
-
-        user.highscore = !user.highscore ? 0 : user.highscore;
-
-      } else {
-
-        user = {} as User;
-
-        user.highscore = 0;
-      }
-      doc.ref.set(user, {merge: true});
-    })
-      .catch(err => {
-
-      });
-  }
-
-  public updateHighscore(uid: string, highscore: number){
+  public updateHighscore(uid: string, highscore: number) {
     if (highscore)
       this.firebaseDb.collection('Users').doc(uid).update({highscore: highscore}).then(value => {
         // success
@@ -189,24 +146,21 @@ export class FirebaseProvider {
         console.log(err.toString());
       })
 
-}
+  }
 
-  /*public getActiveGames(uid: string): Observable<Game>{
-    return this.firebaseDb.collection(uid)
-  }*/
+  public getMoves(gid: string): Observable<Move[]> {
 
-  public getMoves(gid: string): Observable<Move[]>{
-
-  return this.firebaseDb.collection('Games').doc(gid).collection('Moves').valueChanges() as Observable<Move[]>;
+    return this.firebaseDb.collection('Games').doc(gid).collection('Moves').valueChanges() as Observable<Move[]>;
 
   }
 
-  public addMove(gid: string, move: Move){
+  public addMove(gid: string, move: Move): Promise<any> {
+    return this.firebaseDb.collection('Games').doc(gid).collection('Moves').add(move)
 
   }
 
-  public updateGameState(gid: string, state: string ): Observable<Game>{
-    return this.firebaseDb.collection('Games').doc(state).valueChanges() as Observable<Game>;
+  public updateGameState(gid: string, state: string): Promise<void> {
+    return this.firebaseDb.collection('Games').doc(gid).update({state:state});
 
   }
 
@@ -214,12 +168,9 @@ export class FirebaseProvider {
       set/update Highscore(uid, score)
       addToHighscore(uid, scoreDifference) // Add a value to user highscore
 
-      updateGameState(gid, state)
       updateGameActivePlayer(gid, player) // Player = 0 or 1
 
-      getActiveGames(uid): Observable<Game[]>  // where state != over?
-      getMoves(gid): Observable<Move[]> // collection("Games").doc(gid).collection("Moves")
-      addMove(gid, move:Move)
+      getActiveGames(uid): Promise<Game[]>  // where state != over?
    */
 }
 
