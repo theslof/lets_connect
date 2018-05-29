@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from "angularfire2/firestore";
 import {Observable} from "rxjs/Observable";
-import {Game, User} from "../../lib/interfaces";
+import {Game, Move, User} from "../../lib/interfaces";
 import {AngularFireAuth} from "angularfire2/auth";
 import {AngularFireAuthProvider} from "angularfire2/auth";
 import {default as firebase, User as FUser} from "firebase/app";
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
+import {state} from "@angular/core/src/animation/dsl";
 
 
 /*
@@ -134,6 +135,80 @@ export class FirebaseProvider {
     return this.getUser(this.firebaseAuth.auth.currentUser.uid);
   }
 
+
+  public getHighscore(uid: string, highscore: number): Observable<User>{
+    //return this.firebaseDb.collection('Users').doc(uid).valueChanges() as Observable<User>;
+    return this.firebaseDb.collection('Users').doc(highscore.toString()).valueChanges() as Observable<User>;
+  }
+
+  /*public setHighscore(uid: string, highscore: number): Observable<User>{
+      this.firebaseDb.firestore.doc.ref.set(highscore).then(_ => console.log('set!'));
+      }*/
+
+  /*setHighscore (uid: string, highscore: number): Observable<User> {
+    let highscoreApply = this.firebaseDb (uid, highscore) .ref ().child ('Users');
+    highscoreApply.set ({
+      var1: ''
+    });
+  }*/
+
+  private setHighscore() {
+
+    let user = this.firebaseAuth.auth.currentUser;
+    if (!user)
+      return;
+
+    this.firebaseDb.collection('Users').doc(user.uid).ref.get().then((doc: DocumentSnapshot) => {
+      let user: User;
+
+      if (doc.exists) {
+        user = doc.data() as User;
+
+        user.highscore = !user.highscore ? 0 : user.highscore;
+
+      } else {
+
+        user = {} as User;
+
+        user.highscore = 0;
+      }
+      doc.ref.set(user, {merge: true});
+    })
+      .catch(err => {
+
+      });
+  }
+
+  public updateHighscore(uid: string, highscore: number){
+    if (highscore)
+      this.firebaseDb.collection('Users').doc(uid).update({highscore: highscore}).then(value => {
+        // success
+        console.log('Success!');
+      }).catch(err => {
+        // error
+        console.log(err.toString());
+      })
+
+}
+
+  /*public getActiveGames(uid: string): Observable<Game>{
+    return this.firebaseDb.collection(uid)
+  }*/
+
+  public getMoves(gid: string): Observable<Move[]>{
+
+  return this.firebaseDb.collection('Games').doc(gid).collection('Moves').valueChanges() as Observable<Move[]>;
+
+  }
+
+  public addMove(gid: string, move: Move){
+
+  }
+
+  public updateGameState(gid: string, state: string ): Observable<Game>{
+    return this.firebaseDb.collection('Games').doc(state).valueChanges() as Observable<Game>;
+
+  }
 
   /* TODO
       set/update Highscore(uid, score)
