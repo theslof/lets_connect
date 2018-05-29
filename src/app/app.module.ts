@@ -20,6 +20,7 @@ import {PlayfieldPage} from "../pages/playfield/playfield";
 import {AboutPage} from "../pages/about/about";
 import {ProfilePage} from "../pages/profile/profile";
 import {SplashPage} from "../pages/splash/splash";
+import {EditnamePage} from "../pages/editname/editname";
 import {ChangeProfilePage} from "../pages/change-profile/change-profile";
 
 @NgModule({
@@ -34,6 +35,7 @@ import {ChangeProfilePage} from "../pages/change-profile/change-profile";
     PlayfieldPage,
     ProfilePage,
     SplashPage,
+    EditnamePage,
     ChangeProfilePage
   ],
   imports: [
@@ -56,6 +58,7 @@ import {ChangeProfilePage} from "../pages/change-profile/change-profile";
     PlayfieldPage,
     ProfilePage,
     SplashPage,
+    EditnamePage,
     ChangeProfilePage
   ],
   providers: [
