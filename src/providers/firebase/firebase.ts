@@ -155,13 +155,17 @@ export class FirebaseProvider {
   }
 
   public addMove(gid: string, move: Move): Promise<any> {
-    return this.firebaseDb.collection('Games').doc(gid).collection('Moves').add(move)
+    return this.firebaseDb.collection('Games').doc(gid).collection('Moves').add(move);
 
   }
 
   public updateGameState(gid: string, state: string): Promise<void> {
     return this.firebaseDb.collection('Games').doc(gid).update({state:state});
 
+  }
+
+  public updateGameActivePlayer(gid: string, activePlayer: number): Promise<void>{
+    return this.firebaseDb.collection('Games').doc(gid).update({activePlayer:activePlayer});
   }
 
   /* TODO
