@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {IonicPage, Loading, NavController, NavParams, Popover, PopoverController} from 'ionic-angular';
 import {PopoverMenuData, PopoverPage} from "../popover/popover";
-import {Game, User} from "../../lib/interfaces";
+import {Game, Move, User} from "../../lib/interfaces";
 import {FirebaseProvider} from "../../providers/firebase/firebase";
 
 @IonicPage()
@@ -21,12 +21,14 @@ export class OnlineGamePage {
       {icon: "logo-android", text: "Play AI"},
       {icon: "close", text: "Surrender"}
     ],
-    callback: (index: number) => {this.onOptionsItemSelected(index);}
+    callback: (index: number) => {
+      this.onOptionsItemSelected(index);
+    }
   };
 
   gameGrid: string[][];
-  width=7;
-  height=6;
+  width = 7;
+  height = 6;
   coins = {
     blank: "assets/imgs/coin-none.svg",
     red: "assets/imgs/coin-red.svg",
@@ -42,19 +44,29 @@ export class OnlineGamePage {
   savedGridString: string;
   stepX: number;
   stepY: number;
+  turn: number = 0;
+  moves: Move[] = [];
 
   win: boolean = false;
   tie: boolean = false;
   gridCopy: string[][];
   aiBot: boolean = false;
 
-  playerOneName: string = "Loading..";
-  playerTwoName: string = "Loading..";
-  playerOneAvatar: string = "placeholder";
-  playerTwoAvatar: string = "placeholder";
+//  playerOneName: string = "Loading..";
+//  playerTwoName: string = "Loading..";
+//  playerOneAvatar: string = "placeholder";
+//  playerTwoAvatar: string = "placeholder";
 
   game: Game;
-  user: User;
+//  user: User;
+  player1: User = {
+    displayName: "Loading...",
+    profileImage: "placeholder"
+  } as User;
+  player2: User = {
+    displayName: "Loading...",
+    profileImage: "placeholder"
+  } as User;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private popCtrl: PopoverController, private db: FirebaseProvider) {
     this.getDbData();
@@ -67,7 +79,7 @@ export class OnlineGamePage {
   //
 
   // Dev tools in popover menu.
-  public onOptionsItemSelected(id: number){
+  public onOptionsItemSelected(id: number) {
     console.log("Callback: " + id);
     switch (id) {
       case 0:
@@ -99,12 +111,52 @@ export class OnlineGamePage {
 
   private getDbData() {
     this.game = this.navParams.get("game") as Game;
-    this.playerTwoName = this.game.player2;
     this.db.getUser(this.game.player1).subscribe(user => {
       if (user) {
-        this.playerOneName = user.displayName;
-        this.user = user;
-        this.playerOneAvatar = user.profileImage;
+        this.player1 = user;
+      }
+    });
+    if (this.game.type == "local")
+      this.player2 = {
+        displayName: this.game.player2,
+        profileImage: "placeholder"
+      } as User;
+    else
+      this.db.getUser(this.game.player2).subscribe(user => {
+        if (user) {
+          this.player2 = user;
+        }
+      });
+
+    this.db.getMoves(this.game.gid).subscribe((moves: Move[]) => {
+      console.log(`Got ${moves.length} moves from the server!`);
+      moves.sort((a, b) => {
+        return a.move - b.move
+      });
+      moves.forEach(m => {
+        console.log(`Move ${m.move}`)
+      });
+      if (this.turn < moves.length) {
+        if(this.game.state == "init") {
+          this.game.state = "active";
+          this.db.updateGameState(this.game.gid, this.game.state);
+        }
+        moves.slice(this.turn).forEach(move => {
+          this.gameGrid[move.y][move.x] = move.player == 0 ? this.coins.yellow : this.coins.red;
+          this.moves.push(move);
+          this.turn++;
+          this.playerOneTurn = move.player == 0;
+          this.dropping = true;
+        });
+        this.win = this.winCheck(this.getNextCoin());
+        if (this.win) {
+          this.game.state = "over";
+          this.game.activePlayer = this.playerOneTurn ? 0 : 1;
+          this.db.updateGameState(this.game.gid, this.game.state);
+        }else{
+          this.game.activePlayer = this.playerOneTurn ? 1 : 0;
+        }
+        this.db.updateGameActivePlayer(this.game.gid, this.game.activePlayer);
       }
     });
   }
@@ -115,27 +167,27 @@ export class OnlineGamePage {
 
   // Returns coin width based on grid size.
   private getCoinWidthStyle() {
-    return 100/this.width + "%";
+    return 100 / this.width + "%";
   }
 
   // Returns the coin position in % for top placing box.
   private getPlaceCoinPosition() {
-    return (100/this.width)*this.placeCoinPosition + "%";
+    return (100 / this.width) * this.placeCoinPosition + "%";
   }
 
   // Returns the hidden button size. Based on placment coin.
   private getHiddenMoveButtonsPosition() {
-    return ((100/this.width)*this.placeCoinPosition)-45 + "%";
+    return ((100 / this.width) * this.placeCoinPosition) - 45 + "%";
   }
 
   //
   private getMoveRightWidth() {
-    return (100/this.width)*(this.placeCoinPosition+1) + "%";
+    return (100 / this.width) * (this.placeCoinPosition + 1) + "%";
   }
 
   //
   private getMoveLeftWidth() {
-    return 80-(100/this.width)*(this.placeCoinPosition+1) + "%";
+    return 80 - (100 / this.width) * (this.placeCoinPosition + 1) + "%";
   }
 
 
@@ -146,29 +198,30 @@ export class OnlineGamePage {
   // Draw the main grid.
   private drawPlayfield() {
     this.gameGrid = new Array(this.height);
-    for(let i = 0; i < this.gameGrid.length; i++){
+    for (let i = 0; i < this.gameGrid.length; i++) {
       this.gameGrid[i] = new Array(this.width);
-      for(let j = 0; j < this.gameGrid[i].length; j++){
+      for (let j = 0; j < this.gameGrid[i].length; j++) {
         this.gameGrid[i][j] = this.coins.blank;
       }
     }
   }
 
-  // Place coin in grid.
-  private dropCoin(x: number, y: number ,coinColor: any) {
-    this.gameGrid[y][x] = coinColor;
-  }
+  /*
+    // Place coin in grid.
+    private dropCoin(x: number, y: number, coinColor: any) {
+      this.gameGrid[y][x] = coinColor;
+    }
+  */
 
   // Cheks if there is a coin placed in grid.
-  private isPlaced(x,y) {
+  private isPlaced(x, y) {
     return (this.gameGrid[y][x] !== this.coins.blank);
   }
 
   // Returns number of empty slots in the column under the placing coin.
   private getPlacedY() {
-    for(this.placedY=5; this.placedY>=0; this.placedY--) {
+    for (this.placedY = 5; this.placedY >= 0; this.placedY--) {
       if (this.gameGrid[this.placedY][this.placeCoinPosition] === this.coins.blank) return this.placedY;
-
     }
   }
 
@@ -178,24 +231,32 @@ export class OnlineGamePage {
 
   // Control buttons.
   private moveLeft() {
-    if(this.placeCoinPosition < this.width-1) {
-      if(this.dropping) this.switchTurn();
+    if (this.placeCoinPosition < this.width - 1) {
+      if (this.dropping) this.switchTurn();
       this.dropping = false;
       this.placeCoinPosition++;
     }
   }
+
   private moveRight() {
-    if(this.placeCoinPosition > 0) {
-      if(this.dropping) this.switchTurn();
+    if (this.placeCoinPosition > 0) {
+      if (this.dropping) this.switchTurn();
       this.dropping = false;
       this.placeCoinPosition--;
     }
   }
+
   private moveDown() {
-    if (this.getPlacedY() <= 5) {
+    if (this.getPlacedY() < this.height) {
       this.dropping = true;
-      this.dropCoin(this.placeCoinPosition, this.getPlacedY(), this.getNextCoin());
-      if(this.winCheck(this.getNextCoin())) this.win = true;
+      this.db.addMove(this.game.gid, {
+        x: this.placeCoinPosition,
+        y: this.getPlacedY(),
+        player: this.playerOneTurn ? 0 : 1,
+        move: this.turn
+      } as Move);
+//      this.dropCoin(this.placeCoinPosition, this.getPlacedY(), this.getNextCoin());
+//      if (this.winCheck(this.getNextCoin())) this.win = true;
     }
   }
 
@@ -236,10 +297,10 @@ export class OnlineGamePage {
     return true;
   }
 
-  private winCheck(player :string) {
+  private winCheck(player: string) {
 
     // verticalCheck
-    for (let y=0; y<this.height-3; y++) {
+    for (let y = 0; y < this.height - 3; y++) {
       for (let x = 0; x < this.width; x++) {
         if (
           this.gameGrid[y][x] === player &&
@@ -251,7 +312,7 @@ export class OnlineGamePage {
     }
 
     // horizontalCheck
-    for (let x=0; x<this.width-3; x++) {
+    for (let x = 0; x < this.width - 3; x++) {
       for (let y = 0; y < this.height; y++) {
         if (
           this.gameGrid[y][x] === player &&
@@ -263,8 +324,8 @@ export class OnlineGamePage {
     }
 
     // ascendingDiagonalCheck
-    for (let x=3; x<this.width; x++) {
-      for (let y = 0; y < this.height-3; y++) {
+    for (let x = 3; x < this.width; x++) {
+      for (let y = 0; y < this.height - 3; y++) {
         if (
           this.gameGrid[y][x] === player &&
           this.gameGrid[y + 1][x - 1] === player &&
@@ -275,7 +336,7 @@ export class OnlineGamePage {
     }
 
     // descendingDiagonalCheck
-    for (let x=3; x<this.width; x++) {
+    for (let x = 3; x < this.width; x++) {
       for (let y = 3; y < this.height; y++) {
         if (
           this.gameGrid[y][x] === player &&
@@ -321,7 +382,7 @@ export class OnlineGamePage {
       }
     }
 
-    for (let i=0; i<1; i++) {
+    for (let i = 0; i < 1; i++) {
       for (let x = 0; x < this.width; x++) {
         this.gridCopy = JSON.parse(JSON.stringify(this.gameGrid));
         for (let y = this.height - 1; y >= 0; y--) {
@@ -342,9 +403,9 @@ export class OnlineGamePage {
     }
 
     let randomX;
-    let loopVar =  true;
+    let loopVar = true;
     let randomY;
-    while(loopVar) {
+    while (loopVar) {
 
       randomX = Math.floor(Math.random() * this.width);
       for (randomY = this.height - 1; randomY >= 0; randomY--) {
@@ -392,7 +453,7 @@ export class OnlineGamePage {
   }
 
   // Custom win check for AI
-  private aiTestOutcome(player :string) {
+  private aiTestOutcome(player: string) {
 
     // verticalCheck
     for (let y = 0; y < this.height - 3; y++) {
@@ -459,8 +520,8 @@ export class OnlineGamePage {
   private clearGrid() {
     this.win = false;
     this.drawPlayfield();
-    this.stepX = this.width-1;
-    this.stepY = this.height-1;
+    this.stepX = this.width - 1;
+    this.stepY = this.height - 1;
   }
 
   private loadGrid() {

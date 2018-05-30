@@ -149,7 +149,7 @@ export class FirebaseProvider {
   }
 
   public getMoves(gid: string): Observable<Move[]> {
-
+    console.log(`Getting moves for game ${gid}`);
     return this.firebaseDb.collection('Games').doc(gid).collection('Moves').valueChanges() as Observable<Move[]>;
 
   }

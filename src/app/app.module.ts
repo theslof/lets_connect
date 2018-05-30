@@ -22,6 +22,7 @@ import {SplashPage} from "../pages/splash/splash";
 import {EditnamePage} from "../pages/editname/editname";
 import {ChangeProfilePage} from "../pages/change-profile/change-profile";
 import {GameListPage} from "../pages/game-list/game-list";
+import {OnlineGamePage} from "../pages/online-game/online-game";
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {GameListPage} from "../pages/game-list/game-list";
     SplashPage,
     EditnamePage,
     ChangeProfilePage,
-    GameListPage
+    GameListPage,
+    OnlineGamePage
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,8 @@ import {GameListPage} from "../pages/game-list/game-list";
     SplashPage,
     EditnamePage,
     ChangeProfilePage,
-    GameListPage
+    GameListPage,
+    OnlineGamePage
   ],
   providers: [
     StatusBar,

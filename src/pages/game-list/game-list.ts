@@ -4,6 +4,7 @@ import {FirebaseProvider} from "../../providers/firebase/firebase";
 import {Game, User} from "../../lib/interfaces";
 import {Observable} from "rxjs/Observable";
 import {PlayfieldPage} from "../playfield/playfield";
+import {OnlineGamePage} from "../online-game/online-game";
 
 @IonicPage()
 @Component({
@@ -49,7 +50,7 @@ export class GameListPage {
   }
 
   public startGame(game: Game) {
-    this.navCtrl.push(PlayfieldPage, {game:game});
+    this.navCtrl.push(OnlineGamePage, {game:game});
   }
 
   private getUser(uid: string): Observable<User> {

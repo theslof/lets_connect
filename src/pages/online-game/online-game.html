@@ -22,8 +22,8 @@
 
   <ion-row class="playerBox" center>
     <ion-col text-center [class.textGlow]="!playerOneTurn">
-      <img class="avatar" src="../assets/imgs/avatars/{{playerOneAvatar}}.svg"/>
-      <h2>{{playerOneName}}</h2>
+      <img class="avatar" src="../assets/imgs/avatars/{{player1.profileImage}}.svg"/>
+      <h2>{{player1.displayName}}</h2>
     </ion-col>
 
     <ion-col text-center>
@@ -31,8 +31,8 @@
     </ion-col>
 
     <ion-col text-center [class.textGlow]="playerOneTurn">
-      <img class="avatar" src="../assets/imgs/avatars/{{playerTwoAvatar}}.svg"/>
-      <h2>{{playerTwoName}}</h2>
+      <img class="avatar" src="../assets/imgs/avatars/{{player2.profileImage}}.svg"/>
+      <h2>{{player2.displayName}}</h2>
     </ion-col>
   </ion-row>
 
