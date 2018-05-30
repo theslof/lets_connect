@@ -1,10 +1,21 @@
 import {Injectable} from '@angular/core';
+import {AngularFirestore, AngularFirestoreCollection} from "angularfire2/firestore";
 import {Observable} from "rxjs/Observable";
-import {Game, User} from "../../lib/interfaces";
-import {AngularFirestore} from "angularfire2/firestore";
+import {Game, Move, User} from "../../lib/interfaces";
 import {AngularFireAuth} from "angularfire2/auth";
-import {DocumentSnapshot} from "@firebase/firestore"
+import {AngularFireAuthProvider} from "angularfire2/auth";
+import {default as firebase, User as FUser} from "firebase/app";
+import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
+import {state} from "@angular/core/src/animation/dsl";
+import QuerySnapshot = firebase.firestore.QuerySnapshot;
 
+
+/*
+  Generated class for the FirebaseProvider provider.
+
+  See https://angular.io/guide/dependency-injection for more info on providers
+  and Angular DI.
+*/
 @Injectable()
 
 export class FirebaseProvider {
@@ -19,7 +30,9 @@ export class FirebaseProvider {
 
   // returns user as an Observable
   public getUser(uid: string): Observable<User> {
+    //return this.firebaseDb.collection('Users').valueChanges();
     return this.firebaseDb.collection('Users').doc(uid).valueChanges() as Observable<User>;
+
   }
 
   // method for updating your displayname. Don't change if value is null.
@@ -115,7 +128,6 @@ export class FirebaseProvider {
 
       });
 
-
   }
 
 // method for getting current user.
@@ -124,16 +136,65 @@ export class FirebaseProvider {
   }
 
 
+  public updateHighscore(uid: string, highscore: number) {
+    if (highscore)
+      this.firebaseDb.collection('Users').doc(uid).update({highscore: highscore}).then(value => {
+        // success
+        console.log('Success!');
+      }).catch(err => {
+        // error
+        console.log(err.toString());
+      })
+
+  }
+
+  public getMoves(gid: string): Observable<Move[]> {
+
+    return this.firebaseDb.collection('Games').doc(gid).collection('Moves').valueChanges() as Observable<Move[]>;
+
+  }
+
+
+  public addMove(gid: string, move: Move): Promise<any> {
+    return this.firebaseDb.collection('Games').doc(gid).collection('Moves').add(move);
+
+  }
+
+  //Update state of the game, inactive or active
+  public updateGameState(gid: string, state: string): Promise<void> {
+    return this.firebaseDb.collection('Games').doc(gid).update({state:state});
+
+  }
+
+  //Updates the active player
+  public updateGameActivePlayer(gid: string, activePlayer: number): Promise<void>{
+    return this.firebaseDb.collection('Games').doc(gid).update({activePlayer:activePlayer});
+  }
+
+  // gets the games you are active in
+  public getActiveGames(uid: string): Promise<Game[]> {
+    return new Promise((resolve, reject) =>
+    {
+      this.firebaseDb.collection('Games').ref.where(uid, "==",  true).get().then((query:QuerySnapshot) => {
+        let games:Game[] = [];
+        query.forEach((item:DocumentSnapshot) => {
+          games.push(item.data() as Game);
+        });
+        resolve(games);
+      }).catch(err =>{
+        console.log(err.toString());
+      })
+
+    })
+  }
+
   /* TODO
       set/update Highscore(uid, score)
       addToHighscore(uid, scoreDifference) // Add a value to user highscore
 
-      updateGameState(gid, state)
       updateGameActivePlayer(gid, player) // Player = 0 or 1
 
-      getActiveGames(uid): Observable<Game[]>  // where state != over?
-      getMoves(gid): Observable<Move[]> // collection("Games").doc(gid).collection("Moves")
-      addMove(gid, move:Move)
+      getActiveGames(uid): Promise<Game[]>  // where state != over?
    */
 }
 
