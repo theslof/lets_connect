@@ -3,7 +3,6 @@ import {ErrorHandler, NgModule} from '@angular/core';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
-
 import {MyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
 import {AngularFirestoreModule} from "angularfire2/firestore";
@@ -20,6 +19,8 @@ import {PlayfieldPage} from "../pages/playfield/playfield";
 import {AboutPage} from "../pages/about/about";
 import {ProfilePage} from "../pages/profile/profile";
 import {SplashPage} from "../pages/splash/splash";
+import {EditnamePage} from "../pages/editname/editname";
+import {ChangeProfilePage} from "../pages/change-profile/change-profile";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,9 @@ import {SplashPage} from "../pages/splash/splash";
     SignupPage,
     PlayfieldPage,
     ProfilePage,
-    SplashPage
+    SplashPage,
+    EditnamePage,
+    ChangeProfilePage
   ],
   imports: [
     BrowserModule,
@@ -53,7 +56,9 @@ import {SplashPage} from "../pages/splash/splash";
     SignupPage,
     PlayfieldPage,
     ProfilePage,
-    SplashPage
+    SplashPage,
+    EditnamePage,
+    ChangeProfilePage
   ],
   providers: [
     StatusBar,
