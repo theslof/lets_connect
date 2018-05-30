@@ -7,6 +7,7 @@ import {AngularFireAuthProvider} from "angularfire2/auth";
 import {default as firebase, User as FUser} from "firebase/app";
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 import {state} from "@angular/core/src/animation/dsl";
+import QuerySnapshot = firebase.firestore.QuerySnapshot;
 
 
 /*
@@ -127,7 +128,6 @@ export class FirebaseProvider {
 
       });
 
-
   }
 
 // method for getting current user.
@@ -154,18 +154,38 @@ export class FirebaseProvider {
 
   }
 
+
   public addMove(gid: string, move: Move): Promise<any> {
     return this.firebaseDb.collection('Games').doc(gid).collection('Moves').add(move);
 
   }
 
+  //Update state of the game, inactive or active
   public updateGameState(gid: string, state: string): Promise<void> {
     return this.firebaseDb.collection('Games').doc(gid).update({state:state});
 
   }
 
+  //Updates the active player
   public updateGameActivePlayer(gid: string, activePlayer: number): Promise<void>{
     return this.firebaseDb.collection('Games').doc(gid).update({activePlayer:activePlayer});
+  }
+
+  // gets the games you are active in
+  public getActiveGames(uid: string): Promise<Game[]> {
+    return new Promise((resolve, reject) =>
+    {
+      this.firebaseDb.collection('Games').ref.where(uid, "==",  true).get().then((query:QuerySnapshot) => {
+        let games:Game[] = [];
+        query.forEach((item:DocumentSnapshot) => {
+          games.push(item.data() as Game);
+        });
+        resolve(games);
+      }).catch(err =>{
+        console.log(err.toString());
+      })
+
+    })
   }
 
   /* TODO
