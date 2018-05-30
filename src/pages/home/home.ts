@@ -6,6 +6,7 @@ import {FirebaseProvider} from "../../providers/firebase/firebase";
 import {ProfilePage} from "../profile/profile";
 import {AngularFireAuth} from "angularfire2/auth";
 import {AboutPage} from "../about/about";
+import {GameListPage} from "../game-list/game-list";
 
 @Component({
   selector: 'page-home',
@@ -34,9 +35,9 @@ export class HomePage {
     this.navCtrl.push(SetupLocalGamePage);
   }
 
-  public startOnlineGame() {
-    console.log('"Start online game" clicked!');
-    //this.navCtrl.push(SetupOnlineGamePage);
+  public openGameList() {
+    console.log('"All Games" clicked!');
+    this.navCtrl.push(GameListPage, {user:this.auth.auth.currentUser.uid});
   }
 
   public onOptionsItemSelected(id: number) {

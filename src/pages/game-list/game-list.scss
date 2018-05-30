@@ -1,0 +1,16 @@
+page-game-list {
+  ion-item img {
+    width: 24px;
+    height: auto;
+    margin: 10px;
+    vertical-align: middle;
+  }
+  ion-item span {
+    vertical-align: middle;
+  }
+
+  .active{
+    color: map-get($colors, primary);
+    font-weight: bold;
+  }
+}
