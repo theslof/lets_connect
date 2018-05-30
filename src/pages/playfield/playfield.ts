@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, Popover, PopoverController} from 'ionic-angular';
+import {IonicPage, Loading, NavController, NavParams, Popover, PopoverController} from 'ionic-angular';
 import {PopoverMenuData, PopoverPage} from "../popover/popover";
 import {fakeAsync} from "@angular/core/testing";
-import {Game} from "../../lib/interfaces";
+import {Game, User} from "../../lib/interfaces";
+import {FirebaseProvider} from "../../providers/firebase/firebase";
 
 
 @IonicPage()
@@ -19,7 +20,7 @@ export class PlayfieldPage {
       {icon: "hammer", text: "Load grid"},
       {icon: "hammer", text: "Step move"},
       {icon: "hammer", text: "Switch player"},
-      {icon: "hammer", text: "Play AI"},
+      {icon: "logo-android", text: "Play AI"},
       {icon: "close", text: "Surrender"}
     ],
     callback: (index: number) => {this.onOptionsItemSelected(index);}
@@ -45,14 +46,20 @@ export class PlayfieldPage {
   stepY: number;
 
   win: boolean = false;
+  tie: boolean = false;
   gridCopy: string[][];
   aiBot: boolean = false;
 
-  game: any;
+  playerOneName: string = "Loading..";
+  playerTwoName: string = "Loading..";
+  playerOneAvatar: string = "placeholder";
+  playerTwoAvatar: string = "placeholder";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private popCtrl: PopoverController) {
-    this.game = this.navParams.get("game") as Game;
+  game: Game;
+  user: User;
 
+  constructor(public navCtrl: NavController, public navParams: NavParams, private popCtrl: PopoverController, private db: FirebaseProvider) {
+    this.getDbData();
     this.menu = this.popCtrl.create(PopoverPage, this.menuData);
     this.drawPlayfield();
   }
@@ -92,9 +99,16 @@ export class PlayfieldPage {
   // Get data from db here.
   //
 
-  // Get display names from db.
-  private getPlayers() {
-    return "Player 1 - Player 2";
+  private getDbData() {
+    this.game = this.navParams.get("game") as Game;
+    this.playerTwoName = this.game.player2;
+    this.db.getUser(this.game.player1).subscribe(user => {
+      if (user) {
+        this.playerOneName = user.displayName;
+        this.user = user;
+        this.playerOneAvatar = user.profileImage;
+      }
+    });
   }
 
   //----------------------------------------------
@@ -217,6 +231,13 @@ export class PlayfieldPage {
   // Win check
   //
 
+  private tieCheck() {
+    for (let x = 0; x < this.width; x++) {
+      if (this.gameGrid[0][x] === this.coins.blank) return false;
+    }
+    return true;
+  }
+
   private winCheck(player :string) {
 
     // verticalCheck
@@ -268,6 +289,7 @@ export class PlayfieldPage {
     }
 
     // No win
+    this.tie = this.tieCheck();
     return false;
 
   }
@@ -358,6 +380,7 @@ export class PlayfieldPage {
           }
         }
       }
+      if (randomY < 0) loopVar = true;
     }
     console.log("86% @ " + randomX + ", " + randomY);
     this.aiPlace(randomX);

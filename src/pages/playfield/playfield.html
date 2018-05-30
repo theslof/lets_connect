@@ -21,10 +21,18 @@
   </ion-item>
 
   <ion-row class="playerBox" center>
+    <ion-col text-center [class.textGlow]="!playerOneTurn">
+      <img class="avatar" src="../assets/imgs/avatars/{{playerOneAvatar}}.svg"/>
+      <h2>{{playerOneName}}</h2>
+    </ion-col>
+
     <ion-col text-center>
-      <h2 [class.textGlow]="playerOneTurn">Player 1</h2>
-      <h2 class="textGlow">VS</h2>
-      <h2 [class.textGlow]="!playerOneTurn">Player 2</h2>
+    <h2>VS</h2>
+    </ion-col>
+
+    <ion-col text-center [class.textGlow]="playerOneTurn">
+      <img class="avatar" src="../assets/imgs/avatars/{{playerTwoAvatar}}.svg"/>
+      <h2>{{playerTwoName}}</h2>
     </ion-col>
   </ion-row>
 
@@ -68,7 +76,7 @@
       <ion-icon name="ios-arrow-dropdown-circle" (click)="moveDown()"></ion-icon>
       <ion-icon name="ios-arrow-dropright-circle" (click)="moveLeft()"></ion-icon>
     </ion-col>
-    <ion-col text-center *ngIf="dropping && !win" [ngClass]="playerOneTurn ? 'buttonColorPlayerOne':'buttonColorPlayerTwo'">
+    <ion-col text-center *ngIf="dropping && !win && !tie" [ngClass]="playerOneTurn ? 'buttonColorPlayerOne':'buttonColorPlayerTwo'">
       <button ion-button large block (click)="nextPlayerTurn()">End Turn</button>
     </ion-col>
     <ion-col text-center *ngIf="dropping && win">
@@ -77,6 +85,10 @@
         You won!
         <ion-icon [ngClass]="playerOneTurn ? 'buttonColorPlayerOne':'buttonColorPlayerTwo'" name="md-trophy"></ion-icon>
       </button>
+      <button ion-button large block (click)="newGame()">New game</button>
+    </ion-col>
+    <ion-col text-center *ngIf="dropping && tie">
+      <button ion-button large block>You both lost!</button>
       <button ion-button large block (click)="newGame()">New game</button>
     </ion-col>
   </ion-row>

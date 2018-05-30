@@ -13,11 +13,15 @@ page-playfield {
     h2 {
       font-size: 2rem;
       display: inline-block;
-      color: rgba(72, 138, 255, 0.46);
-      margin: 0 2rem 0 2rem;
+      color: #488aff;
+      margin: 0 1rem 0 1rem;
     }
     .textGlow {
-      color: #488aff;
+      opacity: 0.3;
+    }
+    .avatar {
+      height: 6rem;
+      width: auto;
     }
   }
 
@@ -85,7 +89,7 @@ page-playfield {
   // Coin main grid
   ion-grid.board {
     margin: 1rem 0 0 0;
-    padding: 0rem;
+    padding: 0;
     ion-row {
       margin: 0;
       padding: 0;
@@ -119,12 +123,12 @@ page-playfield {
 
   // Top placing box. Where the next coin is displayed
   .placingBox {
-    margin: 0rem 0 0 0;
+    margin: 0 0 0 0;
     ion-col {
       padding: 0rem;
-      margin-top: 1rem;
+      margin-top: 0;
       margin-right: 2rem;
-      margin-bottom: 7rem;
+      margin-bottom: 6.5rem;
     }
     .coin {
       position: absolute;
