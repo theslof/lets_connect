@@ -19,7 +19,7 @@ export class PlayfieldPage {
       {icon: "hammer", text: "Load grid"},
       {icon: "hammer", text: "Step move"},
       {icon: "hammer", text: "Switch player"},
-      {icon: "hammer", text: "Palay AI"},
+      {icon: "hammer", text: "Play AI"},
       {icon: "close", text: "Surrender"}
     ],
     callback: (index: number) => {this.onOptionsItemSelected(index);}
@@ -41,7 +41,6 @@ export class PlayfieldPage {
 
   dummyGrid: string[][];
   savedGridString: string;
-  testGridString: string;
   stepX: number;
   stepY: number;
 
@@ -50,8 +49,6 @@ export class PlayfieldPage {
   aiBot: boolean = false;
 
   game: any;
-  player1Name: string;
-  player2Name: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private popCtrl: PopoverController) {
     this.game = this.navParams.get("game") as Game;
@@ -64,14 +61,7 @@ export class PlayfieldPage {
   // Popover
   //
 
-  /*
-  <button item-end ion-button small round (click)="nextPlayerTurn()">Switch</button>
-    <button item-end ion-button small round (click)="clearGrid()">Clear</button>
-    <button item-end ion-button small round (click)="JSONstringifyGrid()">Save</button>
-    <button item-end ion-button small round (click)="loadGrid()">Load</button>
-    <button item-end ion-button small round (click)="stepFromLoadedGrid()">Step</button>
-   */
-
+  // Dev tools in popover menu.
   public onOptionsItemSelected(id: number){
     console.log("Callback: " + id);
     switch (id) {
@@ -200,6 +190,7 @@ export class PlayfieldPage {
   // Aborts animation and switches to next player.
   private nextPlayerTurn() {
     this.switchTurn();
+    this.placeCoinPosition = 3;
     this.dropping = false;
     if (this.getNextCoin() === this.coins.red && this.aiBot) this.aiMove();
   }
@@ -285,13 +276,12 @@ export class PlayfieldPage {
   // AI player
   //
 
+  // Calculate best move
   private aiMove() {
-
     let currentPlayer = this.getNextCoin();
     let otherPlayer = this.coins.yellow;
     let result: boolean;
     let deepGridCopy = JSON.parse(JSON.stringify(this.gameGrid));
-
     if (currentPlayer === this.coins.yellow) otherPlayer = this.coins.red;
 
     for (let x = 0; x < this.width; x++) {
@@ -312,7 +302,6 @@ export class PlayfieldPage {
     }
 
     for (let i=0; i<1; i++) {
-
       for (let x = 0; x < this.width; x++) {
         this.gridCopy = JSON.parse(JSON.stringify(this.gameGrid));
         for (let y = this.height - 1; y >= 0; y--) {
@@ -330,7 +319,6 @@ export class PlayfieldPage {
           }
         }
       }
-
     }
 
     let randomX;
@@ -349,7 +337,6 @@ export class PlayfieldPage {
         }
 
       }
-
 
       for (let x = 0; x < this.width; x++) {
         this.gridCopy = JSON.parse(JSON.stringify(deepGridCopy));
@@ -371,20 +358,19 @@ export class PlayfieldPage {
           }
         }
       }
-
     }
-
     console.log("86% @ " + randomX + ", " + randomY);
     this.aiPlace(randomX);
 
   }
 
+  // Place AI coin
   private aiPlace(x: number) {
     this.placeCoinPosition = x;
     this.moveDown();
-    //this.nextPlayerTurn();
   }
 
+  // Custom win check for AI
   private aiTestOutcome(player :string) {
 
     // verticalCheck

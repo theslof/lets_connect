@@ -18,7 +18,6 @@ page-playfield {
     }
     .textGlow {
       color: #488aff;
-      //text-shadow: 0 0 4px #8bacff;
     }
   }
 
@@ -44,6 +43,7 @@ page-playfield {
     }
   }
 
+  // Invisible move buttons
   .hiddenMoveButtons {
     z-index: 2;
     position: absolute;
