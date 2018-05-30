@@ -12,7 +12,6 @@ export class SignupPage {
   email: string = "";
   password: string = "";
   confirmpassword: string = "";
-  passError: boolean = false;
   errorMessage: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
@@ -49,7 +48,7 @@ export class SignupPage {
 
     } else {
       this.errorMessage = "Password doesn´t match";
-  this.passError = true;console.log('Wrong')
+      console.log('Wrong')
 
     }
 
