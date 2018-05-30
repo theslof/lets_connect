@@ -21,6 +21,7 @@ import {ProfilePage} from "../pages/profile/profile";
 import {SplashPage} from "../pages/splash/splash";
 import {EditnamePage} from "../pages/editname/editname";
 import {ChangeProfilePage} from "../pages/change-profile/change-profile";
+import {GameListPage} from "../pages/game-list/game-list";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {ChangeProfilePage} from "../pages/change-profile/change-profile";
     ProfilePage,
     SplashPage,
     EditnamePage,
-    ChangeProfilePage
+    ChangeProfilePage,
+    GameListPage
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,8 @@ import {ChangeProfilePage} from "../pages/change-profile/change-profile";
     ProfilePage,
     SplashPage,
     EditnamePage,
-    ChangeProfilePage
+    ChangeProfilePage,
+    GameListPage
   ],
   providers: [
     StatusBar,

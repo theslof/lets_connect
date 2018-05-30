@@ -1,0 +1,23 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Games</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item-sliding *ngFor="let game of games">
+      <ion-item (click)="startGame(game.game)">
+        <img src="../assets/imgs/avatars/{{game.i1}}.svg" />
+        <span><span [class.active]="game.turn1">{{game.p1}}</span> vs <span [class.active]="!game.turn1">{{game.p2}}</span></span>
+        <img src="../assets/imgs/avatars/{{game.i2}}.svg" />
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="danger" (click)="concede(game.gid)">Concede</button></ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+</ion-content>
