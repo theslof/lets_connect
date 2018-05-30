@@ -9,24 +9,12 @@
 
 <ion-content padding>
   <div text-center>
-
-    <!--
-    <ion-row>
-      <h1 class="center">Let's Connect!</h1>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <img src="../assets/imgs/lets_connect_logo.png" class="infinity-logo"/>
-      </ion-col>
-    </ion-row>
-    -->
-
     <ion-row>
       <h1 class="center">Local Game</h1>
     </ion-row>
     <ion-row>
       <button ion-button large outline block class="margin-top-50 user-card">
-        <ion-icon name="custom-profile" margin-right></ion-icon>
+        <img src="../assets/imgs/avatars/{{avatar}}.svg" margin-right />
         {{playerName}}
       </button>
     </ion-row>
@@ -34,8 +22,8 @@
       <h2 class="center">VS</h2>
     </ion-row>
     <ion-row>
-      <button ion-button large outline block class="user-card" (click)="changeOpponentName()">
-        <ion-icon name="custom-profile" margin-right></ion-icon>
+      <button ion-button large outline block class="user-card" align-items-start (click)="changeOpponentName()">
+        <img src="../assets/imgs/avatars/placeholder.svg" margin-right />
         {{opponentName}}
       </button>
     </ion-row>

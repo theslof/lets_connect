@@ -1,26 +1,33 @@
 page-setup-local-game {
-  h1{
+  h1 {
     color: map-get($colors, primary);
   }
 
-  h2{
+  h2 {
     color: map-get($colors, primary);
   }
 
-  .center{
+  button {
+    img {
+      width: 2em;
+      height: auto;
+    }
+  }
+
+  .center {
     margin: auto;
   }
 
-  .inline{
+  .inline {
     display: inline;
   }
 
-  .align-mid{
+  .align-mid {
     margin-top: auto;
     margin-bottom: auto;
   }
 
-  .user-card{
+  .user-card {
     color: map-get($colors, primary);
     font-size: 2em;
     vertical-align: center;
@@ -29,14 +36,14 @@ page-setup-local-game {
     border-radius: 5px;
   }
 
-  .infinity-logo{
+  .infinity-logo {
     max-width: 300px;
     height: auto;
     display: block;
     margin: 40px auto;
   }
 
-  .margin-top-50{
+  .margin-top-50 {
     margin-top: 50px;
   }
 

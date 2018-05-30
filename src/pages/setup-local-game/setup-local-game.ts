@@ -12,6 +12,7 @@ import {Game, User} from "../../lib/interfaces";
 export class SetupLocalGamePage {
   user: User;
   playerName: string = "Loading User...";
+  avatar:string = "placeholder";
   opponentName: string = "Player 2";
   loading: boolean = true;
 
@@ -22,6 +23,7 @@ export class SetupLocalGamePage {
       if (user) {
         this.playerName = user.displayName;
         this.user = user;
+        this.avatar = user.profileImage;
         this.loading = false;
       }
     },err => {
