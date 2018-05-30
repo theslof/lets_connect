@@ -25,7 +25,9 @@
         <button ion-button large block class="margin-top-50" (click)="startLocalGame()">Local Game</button>
       </ion-col>
       <ion-col col-12>
-        <button ion-button large block (click)="openGameList()">All Games</button>
+        <button ion-button large block (click)="openGameList()">
+          All Games <ion-badge style="margin-left: 10px" color="secondary" *ngIf="turns != 0">{{turns}}</ion-badge>
+        </button>
       </ion-col>
     </ion-row>
   </div>
