@@ -110,7 +110,7 @@ export class FirebaseProvider {
         user.displayName = !user.displayName ? "Anon" : user.displayName;
         user.email = !user.email ? "anon@anon.no" : user.email;
         user.highscore = !user.highscore ? 0 : user.highscore;
-        user.profileImage = !user.profileImage ? "" : user.profileImage;
+        user.profileImage = !user.profileImage || user.profileImage == "" ? "placeholder" : user.profileImage;
 
       } else {
 
@@ -120,7 +120,7 @@ export class FirebaseProvider {
         user.displayName = !fuser.displayName ? "Anon" : fuser.displayName;
         user.email = !fuser.email ? "anon@anon.no" : fuser.email;
         user.highscore = 0;
-        user.profileImage = "";
+        user.profileImage = "placeholder";
       }
       doc.ref.set(user, {merge: true});
     })
