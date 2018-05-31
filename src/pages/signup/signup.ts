@@ -12,6 +12,7 @@ export class SignupPage {
   email: string = "";
   password: string = "";
   confirmpassword: string = "";
+  username: string = "";
   errorMessage: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
@@ -36,10 +37,15 @@ export class SignupPage {
 
     alert.present();
 */
+    /*if (this.password == this.confirmpassword) {
+      console.log('Correct');
+      this.db.signup(this.email, this.password, "username").then(value => {
+    */
     if (this.password == this.confirmpassword) {
       console.log('Correct');
-      this.db.signup(this.email, this.password).then(value => {
+      this.db.signup(this.email, this.password, this.username).then(value => {
         //Success
+
       }).catch(err => {
         console.log(err.toString());
         this.errorMessage = err.toString();

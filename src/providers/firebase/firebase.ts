@@ -61,11 +61,13 @@ export class FirebaseProvider {
   }
 
   // create the user and signs in automatically.
-  public signup(email: string, password: string): Promise<boolean> {
+  public signup(email: string, password: string, displayName?:string): Promise<boolean> {
+    if(displayName == "")
+      displayName = null;
     return new Promise<boolean>((resolve, reject) => {
       this.firebaseAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(email, password)
         .then(response => {
-          this.createNewUser();
+          this.createNewUser(displayName);
           resolve(true);
         })
         .catch(err => {
@@ -96,7 +98,7 @@ export class FirebaseProvider {
   }
 
   // Method for creating new user. If the user does not exist in the database, it's created.
-  private createNewUser() {
+  private createNewUser(displayName?:string) {
     let fuser = this.firebaseAuth.auth.currentUser;
     if (!fuser)
       return;
@@ -121,6 +123,9 @@ export class FirebaseProvider {
         user.email = !fuser.email ? "anon@anon.no" : fuser.email;
         user.highscore = 0;
         user.profileImage = "placeholder";
+
+        if(displayName)
+          user.displayName = displayName;
       }
       doc.ref.set(user, {merge: true});
     })
