@@ -12,7 +12,13 @@
     <ion-item-sliding *ngFor="let game of games">
       <ion-item (click)="startGame(game.game)">
         <img src="../assets/imgs/avatars/{{game.i1}}.svg" />
-        <span><span [class.active]="game.turn1">{{game.p1}}</span> vs <span [class.active]="!game.turn1">{{game.p2}}</span></span>
+        <span>
+          <ion-icon *ngIf="game.turn1 && game.over" class="trophy" name="md-trophy"></ion-icon>
+          <span [class.active]="game.turn1">{{game.p1}}</span>
+          vs
+          <span [class.active]="!game.turn1">{{game.p2}}</span>
+          <ion-icon *ngIf="!game.turn1 && game.over" class="trophy" name="md-trophy"></ion-icon>
+        </span>
         <img src="../assets/imgs/avatars/{{game.i2}}.svg" />
       </ion-item>
       <ion-item-options>

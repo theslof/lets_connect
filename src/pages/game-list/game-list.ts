@@ -15,12 +15,22 @@ export class GameListPage {
   users = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public db: FirebaseProvider) {
+  }
+
+  ionViewWillEnter() {
+    this.buildList();
+  }
+
+  private buildList(){
+    this.games = [] as [GameData];
+    this.users = {};
     let uid = this.navParams.get("user");
     this.db.getActiveGames(uid).then((data: Game[]) => {
         data.forEach(game => {
           let gameData: GameData = {} as GameData;
           gameData.game = game;
           gameData.turn1 = game.activePlayer == 0;
+          gameData.over = game.state == "over";
           this.getUser(game.player1).subscribe(u => {
             gameData.p1 = u.displayName;
             gameData.i1 = u.profileImage
@@ -67,5 +77,6 @@ interface GameData {
   i1: string,
   p2: string,
   i2: string,
-  turn1: boolean
+  turn1: boolean,
+  over: boolean
 }

@@ -30,6 +30,13 @@ export class HomePage {
   constructor(public navCtrl: NavController, private popCtrl: PopoverController, private db: FirebaseProvider,
               private auth: AngularFireAuth) {
     this.menu = this.popCtrl.create(PopoverPage, this.menuData);
+  }
+
+  ionViewWillEnter(){
+    this.showNumberOfTurns();
+  }
+
+  private showNumberOfTurns(){
     let uid = this.auth.auth.currentUser.uid;
     this.db.getActiveGames(uid).then((value: Game[]) => {
       this.turns = value.filter((value1, index) => {

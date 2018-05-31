@@ -5,12 +5,14 @@ page-game-list {
     margin: 10px;
     vertical-align: middle;
   }
-  ion-item span {
-    vertical-align: middle;
-  }
 
-  .active{
+  .active {
     color: map-get($colors, primary);
     font-weight: bold;
+  }
+
+  .trophy {
+    color: gold;
+    font-size: 1em;
   }
 }
