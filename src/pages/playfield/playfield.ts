@@ -49,7 +49,8 @@ export class PlayfieldPage {
   tie: boolean = false;
   gridCopy: string[][];
   aiBot: boolean = false;
-
+  winRowX = [10, 10, 10, 10];
+  winRowY = [10, 10, 10, 10];
   playerOneName: string = "Loading..";
   playerTwoName: string = "Loading..";
   playerOneAvatar: string = "placeholder";
@@ -197,7 +198,7 @@ export class PlayfieldPage {
     if (this.getPlacedY() <= 5) {
       this.dropping = true;
       this.dropCoin(this.placeCoinPosition, this.getPlacedY(), this.getNextCoin());
-      if(this.winCheck(this.getNextCoin())) this.win = true;
+      if (this.winCheck(this.getNextCoin())) this.win = true;
     }
   }
 
@@ -227,6 +228,10 @@ export class PlayfieldPage {
     this.placeCoinPosition = 3;
   }
 
+  private navToStartPage() {
+    this.navCtrl.popToRoot();
+  }
+
   //----------------------------------------------
   // Win check
   //
@@ -236,6 +241,15 @@ export class PlayfieldPage {
       if (this.gameGrid[0][x] === this.coins.blank) return false;
     }
     return true;
+  }
+
+  winRowCheck(x: number,y: number) {
+    for(let i = 0; i<4; i++) {
+      if (this.winRowX[i] == x && this.winRowY[i] == y) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private winCheck(player :string) {
@@ -248,7 +262,11 @@ export class PlayfieldPage {
           this.gameGrid[y + 1][x] === player &&
           this.gameGrid[y + 2][x] === player &&
           this.gameGrid[y + 3][x] === player
-        ) return true;
+        ) {
+          this.winRowX = [x,x,x,x];
+          this.winRowY = [y,y+1,y+2,y+3];
+          return true;
+        }
       }
     }
 
@@ -260,7 +278,11 @@ export class PlayfieldPage {
           this.gameGrid[y][x + 1] === player &&
           this.gameGrid[y][x + 2] === player &&
           this.gameGrid[y][x + 3] === player
-        ) return true;
+        ) {
+          this.winRowX = [x,x+1,x+2,x+3];
+          this.winRowY = [y,y,y,y];
+          return true;
+        }
       }
     }
 
@@ -272,7 +294,11 @@ export class PlayfieldPage {
           this.gameGrid[y + 1][x - 1] === player &&
           this.gameGrid[y + 2][x - 2] === player &&
           this.gameGrid[y + 3][x - 3] === player
-        ) return true;
+        ) {
+          this.winRowX = [x,x+1,x+2,x+3];
+          this.winRowY = [y,y+1,y+2,y+3];
+          return true;
+        }
       }
     }
 
@@ -284,7 +310,11 @@ export class PlayfieldPage {
           this.gameGrid[y - 1][x - 1] === player &&
           this.gameGrid[y - 2][x - 2] === player &&
           this.gameGrid[y - 3][x - 3] === player
-        ) return true;
+        ) {
+          this.winRowX = [x,x-1,x-2,x-3];
+          this.winRowY = [y,y-1,y-2,y-3];
+          return true;
+        }
       }
     }
 
@@ -333,7 +363,6 @@ export class PlayfieldPage {
             console.log(x + ", " + y + " - " + result);
             if (result) {
               console.log("99% @ " + x + ", " + y);
-              //deepGridCopy = JSON.parse(JSON.stringify(this.gridCopy));
               this.aiPlace(x);
               return null;
             }
@@ -459,6 +488,8 @@ export class PlayfieldPage {
   }
 
   private clearGrid() {
+    this.winRowX = [10, 10, 10, 10];
+    this.winRowY = [10, 10, 10, 10];
     this.win = false;
     this.drawPlayfield();
     this.stepX = this.width-1;

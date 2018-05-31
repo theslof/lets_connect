@@ -24,6 +24,10 @@
     <ion-col text-center [class.textGlow]="!playerOneTurn">
       <img class="avatar" src="../assets/imgs/avatars/{{playerOneAvatar}}.svg"/>
       <h2>{{playerOneName}}</h2>
+      <ion-col class="winner" *ngIf="dropping && win && playerOneTurn">
+        <h2>WINNER</h2>
+        <ion-icon class="winnerAni" [ngClass]="playerOneTurn ? 'buttonColorPlayerOne':'buttonColorPlayerTwo'" name="md-trophy"></ion-icon>
+      </ion-col>
     </ion-col>
 
     <ion-col text-center>
@@ -33,9 +37,12 @@
     <ion-col text-center [class.textGlow]="playerOneTurn">
       <img class="avatar" src="../assets/imgs/avatars/{{playerTwoAvatar}}.svg"/>
       <h2>{{playerTwoName}}</h2>
+      <ion-col class="winner" *ngIf="dropping && win && !playerOneTurn">
+        <h2>WINNER</h2>
+        <ion-icon class="winnerAni" [ngClass]="playerOneTurn ? 'buttonColorPlayerOne':'buttonColorPlayerTwo'" name="md-trophy"></ion-icon>
+      </ion-col>
     </ion-col>
   </ion-row>
-
 
   <ion-row class="placingBox" center>
     <ion-col [style.left]=getPlaceCoinPosition()>
@@ -62,8 +69,8 @@
     <ion-grid class="board" center>
     <ion-row *ngFor="let row of gameGrid; let y = index" center>
       <ion-col *ngFor="let item of row; let x = index" text-center>
-        <img *ngIf="(x == placeCoinPosition) && (y == placedY) && dropping" class="coin coinSlideInDown" align-items-center src={{item}}/>
-        <img *ngIf="(x != placeCoinPosition) || (y != placedY) || !dropping" class="coin" align-items-center src={{item}}/>
+        <img *ngIf="(x == placeCoinPosition) && (y == placedY) && dropping" class="coin coinSlideInDown" align-items-center src={{item}} [class.winHighlight]="winRowCheck(x,y)"/>
+        <img *ngIf="(x != placeCoinPosition) || (y != placedY) || !dropping" class="coin" align-items-center src={{item}} [class.winHighlight]="winRowCheck(x,y)"/>
         <img class="boardBackground" src="../../assets/imgs/playfield-background2.svg"/>
       </ion-col>
     </ion-row>
@@ -80,12 +87,8 @@
       <button ion-button large block (click)="nextPlayerTurn()">End Turn</button>
     </ion-col>
     <ion-col text-center *ngIf="dropping && win">
-      <button ion-button large block>
-        <ion-icon [ngClass]="playerOneTurn ? 'buttonColorPlayerOne':'buttonColorPlayerTwo'" name="md-trophy"></ion-icon>
-        You won!
-        <ion-icon [ngClass]="playerOneTurn ? 'buttonColorPlayerOne':'buttonColorPlayerTwo'" name="md-trophy"></ion-icon>
-      </button>
       <button ion-button large block (click)="newGame()">New game</button>
+      <button ion-button large block (click)="navToStartPage()">Start page</button>
     </ion-col>
     <ion-col text-center *ngIf="dropping && tie">
       <button ion-button large block>You both lost!</button>

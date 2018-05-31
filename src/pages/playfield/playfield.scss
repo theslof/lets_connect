@@ -23,6 +23,33 @@ page-playfield {
       height: 6rem;
       width: auto;
     }
+    .winner {
+      margin: 0;
+      padding: 0;
+      top: 0;
+      left: 0;
+      position: absolute;
+      h2 {
+        padding: 0 0.5rem 0 0.5rem;
+        color: white;
+        border-radius: 10%;
+        background-color: #488aff;
+        margin-top: 9rem;
+      }
+      .ion-md-trophy {
+        position: absolute;
+        left: 36%;
+        margin-top: 11.4rem;
+        font-size: 4.3rem;
+      }
+    }
+  }
+
+  .buttonColorPlayerOne {
+    color: rgb(245, 171, 46);
+  }
+  .buttonColorPlayerTwo {
+    color: rgb(245, 46, 33);
   }
 
   // Move buttons
@@ -35,15 +62,6 @@ page-playfield {
     .button {
       margin-top: 1rem;
       margin-bottom: 2rem;
-    }
-    .buttonColorPlayerOne {
-      color: rgb(245, 171, 46);
-    }
-    .buttonColorPlayerTwo {
-      color: rgb(245, 46, 33);
-    }
-    .ion-md-trophy {
-      font-size: 5rem;
     }
   }
 
@@ -97,14 +115,20 @@ page-playfield {
     ion-col {
       left: 0.3rem !important;
       padding: 0rem;
-      margin: 0rem 0.5rem 0.5rem 0;
+      margin: 0 0.5rem 0.5rem 0;
     }
     .coin {
       z-index: 0;
       width: 100%;
       height: auto;
-      padding: 0rem;
+      padding: 0;
       margin: 0;
+    }
+    .winHighlight{
+      border:4px solid white;
+      border-radius: 500px;
+      -webkit-border-radius: 500px;
+      -moz-border-radius: 500px;
     }
     .boardBackground {
       transform: scale(1.001,1.001);
@@ -172,6 +196,24 @@ page-playfield {
     }
     100% {
       transform: translateX(0);
+    }
+  }
+
+  // Winner animation
+  .winnerAni {
+    animation-name: winnerRot;
+    animation-direction: alternate;
+    animation-iteration-count:infinite;
+    animation-delay: 0s;
+    animation-duration: 0.7s;
+    animation-fill-mode: both;
+  }
+  @keyframes winnerRot {
+    0% {
+      transform: rotate(-20deg);
+    }
+    100% {
+      transform: rotate(20deg);
     }
   }
 

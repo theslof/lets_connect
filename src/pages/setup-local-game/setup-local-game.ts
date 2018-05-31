@@ -71,6 +71,7 @@ export class SetupLocalGamePage {
     game.activePlayer = 0;
     game.state = 'init';
     game.type = 'local';
+    game[this.user.uid] = true;
     this.db.createGame(game).then(value => {
       this.loading = false;
       this.navCtrl.push(PlayfieldPage, {game: game});
