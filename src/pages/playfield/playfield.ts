@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {IonicPage, Loading, NavController, NavParams, Popover, PopoverController} from 'ionic-angular';
 import {PopoverMenuData, PopoverPage} from "../popover/popover";
 import {fakeAsync} from "@angular/core/testing";
-import {Game, User} from "../../lib/interfaces";
+import {Game, Move, User} from "../../lib/interfaces";
 import {FirebaseProvider} from "../../providers/firebase/firebase";
 
 
@@ -44,6 +44,9 @@ export class PlayfieldPage {
   savedGridString: string;
   stepX: number;
   stepY: number;
+
+  turn: number = 0;
+  moves: Move[] = [];
 
   win: boolean = false;
   tie: boolean = false;
@@ -108,6 +111,38 @@ export class PlayfieldPage {
         this.playerOneName = user.displayName;
         this.user = user;
         this.playerOneAvatar = user.profileImage;
+      }
+    });
+
+    this.db.getMoves(this.game.gid).subscribe((moves: Move[]) => {
+      console.log(`Got ${moves.length} moves from the server!`);
+      moves.sort((a, b) => {
+        return a.move - b.move
+      });
+      moves.forEach(m => {
+        console.log(`Move ${m.move}`)
+      });
+      if (this.turn < moves.length) {
+        if(this.game.state == "init") {
+          this.game.state = "active";
+          this.db.updateGameState(this.game.gid, this.game.state);
+        }
+        moves.slice(this.turn).forEach(move => {
+          this.gameGrid[move.y][move.x] = move.player == 0 ? this.coins.yellow : this.coins.red;
+          this.moves.push(move);
+          this.turn++;
+          this.playerOneTurn = move.player == 0;
+          this.dropping = true;
+        });
+        this.win = this.winCheck(this.getNextCoin());
+        if (this.win) {
+          this.game.state = "over";
+          this.game.activePlayer = this.playerOneTurn ? 0 : 1;
+          this.db.updateGameState(this.game.gid, this.game.state);
+        }else{
+          this.game.activePlayer = this.playerOneTurn ? 1 : 0;
+        }
+        this.db.updateGameActivePlayer(this.game.gid, this.game.activePlayer);
       }
     });
   }
@@ -197,8 +232,14 @@ export class PlayfieldPage {
   private moveDown() {
     if (this.getPlacedY() <= 5) {
       this.dropping = true;
-      this.dropCoin(this.placeCoinPosition, this.getPlacedY(), this.getNextCoin());
-      if (this.winCheck(this.getNextCoin())) this.win = true;
+      this.db.addMove(this.game.gid, {
+        x: this.placeCoinPosition,
+        y: this.getPlacedY(),
+        player: this.playerOneTurn ? 0 : 1,
+        move: this.turn
+      } as Move);
+//      this.dropCoin(this.placeCoinPosition, this.getPlacedY(), this.getNextCoin());
+//      if (this.winCheck(this.getNextCoin())) this.win = true;
     }
   }
 
