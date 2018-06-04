@@ -115,7 +115,6 @@ export class PlayfieldPage {
     if (this.movesSub)
       this.movesSub.unsubscribe();
     this.game = null;
-    this.user = null;
     this.drawPlayfield();
 
     this.placeCoinPosition = 3;
@@ -138,6 +137,7 @@ export class PlayfieldPage {
 
   private getDbData(game: Game) {
     this.game = game;
+    console.log(`Started game ${game.gid}`);
     this.playerTwoName = this.game.player2;
     this.userSub = this.db.getUser(this.game.player1).subscribe(user => {
       if (user) {
@@ -152,9 +152,9 @@ export class PlayfieldPage {
       moves.sort((a, b) => {
         return a.move - b.move
       });
-      moves.forEach(m => {
-        console.log(`Move ${m.move}`)
-      });
+//      moves.forEach(m => {
+//        console.log(`Move ${m.move}`)
+//      });
       if (this.turn < moves.length) {
         if (this.game.state == "init") {
           this.game.state = "active";
@@ -267,6 +267,8 @@ export class PlayfieldPage {
 
   private moveDown() {
     let y = this.getPlacedY();
+    if(y >= this.height || y < 0)
+      return;
     let x = this.placeCoinPosition;
     if (y <= 5) {
       this.dropping = true;
@@ -301,10 +303,7 @@ export class PlayfieldPage {
   }
 
   public newGame() {
-    this.clearGrid();
-    this.dropping = false;
-    this.playerOneTurn = true;
-    this.placeCoinPosition = 3;
+    this.reset();
     let game: Game = {} as Game;
     game.player1 = this.user.uid;
     game.player2 = this.playerTwoName;

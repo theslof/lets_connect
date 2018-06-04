@@ -11,7 +11,7 @@ import {PlayfieldPage} from "../playfield/playfield";
   templateUrl: 'game-list.html',
 })
 export class GameListPage {
-  games: [GameData] = [] as [GameData];
+  games: GameData[] = [] as GameData[];
   users = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public db: FirebaseProvider) {
@@ -52,9 +52,7 @@ export class GameListPage {
 
   public concede(gid: string) {
     this.db.updateGameState(gid, 'over').then(value => {
-      this.games.slice(this.games.findIndex((value1, index, obj) => {
-        return value1.game.gid == gid;
-      }), 1)
+      this.games.splice(this.games.findIndex((value1) => value1.game.gid == gid), 1);
     });
   }
 
