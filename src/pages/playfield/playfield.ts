@@ -203,6 +203,8 @@ export class PlayfieldPage {
   }
 
   // Returns number of empty slots in the column under the placing coin.
+  // TODO: Fails when column is full.
+  // TODO: Does not respect this.height
   private getPlacedY() {
     for(this.placedY=5; this.placedY>=0; this.placedY--) {
       if (this.gameGrid[this.placedY][this.placeCoinPosition] === this.coins.blank) return this.placedY;
@@ -262,6 +264,7 @@ export class PlayfieldPage {
     return this.coins.red;
   }
 
+  // TODO: Incompatible with Firebase implementation, needs a rework
   private newGame() {
     this.clearGrid();
     this.dropping = false;
