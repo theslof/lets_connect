@@ -4,6 +4,7 @@ import {PopoverMenuData, PopoverPage} from "../popover/popover";
 import {fakeAsync} from "@angular/core/testing";
 import {Game, Move, User} from "../../lib/interfaces";
 import {FirebaseProvider} from "../../providers/firebase/firebase";
+import {ProfilePage} from "../profile/profile";
 
 
 @IonicPage()
@@ -151,6 +152,10 @@ export class PlayfieldPage {
   // Helper functions.
   //
 
+  private viewProfile() {
+    this.navCtrl.push(ProfilePage, {uid: this.user.uid});
+  }
+
   // Returns coin width based on grid size.
   private getCoinWidthStyle() {
     return 100/this.width + "%";
@@ -286,9 +291,7 @@ export class PlayfieldPage {
 
   winRowCheck(x: number,y: number) {
     for(let i = 0; i<4; i++) {
-      if (this.winRowX[i] == x && this.winRowY[i] == y) {
-        return true;
-      }
+      if (this.winRowX[i] == x && this.winRowY[i] == y) return true;
     }
     return false;
   }
@@ -336,7 +339,7 @@ export class PlayfieldPage {
           this.gameGrid[y + 2][x - 2] === player &&
           this.gameGrid[y + 3][x - 3] === player
         ) {
-          this.winRowX = [x,x+1,x+2,x+3];
+          this.winRowX = [x,x-1,x-2,x-3];
           this.winRowY = [y,y+1,y+2,y+3];
           return true;
         }

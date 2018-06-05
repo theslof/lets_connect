@@ -22,7 +22,7 @@
 
   <ion-row class="playerBox" center>
     <ion-col text-center [class.textGlow]="!playerOneTurn">
-      <img class="avatar" src="../assets/imgs/avatars/{{playerOneAvatar}}.svg"/>
+      <img class="avatar" src="../assets/imgs/avatars/{{playerOneAvatar}}.svg" (click)="viewProfile()"/>
       <h2>{{playerOneName}}</h2>
       <ion-col class="winner" *ngIf="dropping && win && playerOneTurn">
         <h2>WINNER</h2>
@@ -91,7 +91,7 @@
       <button ion-button large block (click)="navToStartPage()">Start page</button>
     </ion-col>
     <ion-col text-center *ngIf="dropping && tie">
-      <button ion-button large block>You both lost!</button>
+      <button ion-button large block>It's a tie!</button>
       <button ion-button large block (click)="newGame()">New game</button>
     </ion-col>
   </ion-row>
