@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {IonicPage, Loading, NavController, NavParams, Popover, PopoverController} from 'ionic-angular';
 import {PopoverMenuData, PopoverPage} from "../popover/popover";
-import {fakeAsync} from "@angular/core/testing";
 import {Game, Move, User} from "../../lib/interfaces";
 import {FirebaseProvider} from "../../providers/firebase/firebase";
+import {Subscription} from "rxjs/Subscription";
+import {HomePage} from "../home/home";
+import {ProfilePage} from "../profile/profile";
 
 
 @IonicPage()
@@ -23,12 +25,14 @@ export class PlayfieldPage {
       {icon: "logo-android", text: "Play AI"},
       {icon: "close", text: "Surrender"}
     ],
-    callback: (index: number) => {this.onOptionsItemSelected(index);}
+    callback: (index: number) => {
+      this.onOptionsItemSelected(index);
+    }
   };
 
   gameGrid: string[][];
-  width=7;
-  height=6;
+  width = 7;
+  height = 6;
   coins = {
     blank: "assets/imgs/coin-none.svg",
     red: "assets/imgs/coin-red.svg",
@@ -47,6 +51,7 @@ export class PlayfieldPage {
 
   turn: number = 0;
   moves: Move[] = [];
+  movesSub: Subscription;
 
   win: boolean = false;
   tie: boolean = false;
@@ -61,9 +66,11 @@ export class PlayfieldPage {
 
   game: Game;
   user: User;
+  userSub: Subscription;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private popCtrl: PopoverController, private db: FirebaseProvider) {
-    this.getDbData();
+    this.reset();
+    this.getDbData(this.navParams.get("game") as Game);
     this.menu = this.popCtrl.create(PopoverPage, this.menuData);
     this.drawPlayfield();
   }
@@ -73,7 +80,7 @@ export class PlayfieldPage {
   //
 
   // Dev tools in popover menu.
-  public onOptionsItemSelected(id: number){
+  public onOptionsItemSelected(id: number) {
     console.log("Callback: " + id);
     switch (id) {
       case 0:
@@ -100,13 +107,40 @@ export class PlayfieldPage {
   }
 
   //----------------------------------------------
+  // Reset game state
+  //
+
+  private reset() {
+    if (this.userSub)
+      this.userSub.unsubscribe();
+    if (this.movesSub)
+      this.movesSub.unsubscribe();
+    this.game = null;
+    this.drawPlayfield();
+
+    this.placeCoinPosition = 3;
+    this.dropping = false;
+    this.playerOneTurn = true;
+
+    this.turn = 0;
+    this.moves = [];
+
+    this.win = false;
+    this.tie = false;
+    this.winRowX = [10, 10, 10, 10];
+    this.winRowY = [10, 10, 10, 10];
+  }
+
+
+  //----------------------------------------------
   // Get data from db here.
   //
 
-  private getDbData() {
-    this.game = this.navParams.get("game") as Game;
+  private getDbData(game: Game) {
+    this.game = game;
+    console.log(`Started game ${game.gid}`);
     this.playerTwoName = this.game.player2;
-    this.db.getUser(this.game.player1).subscribe(user => {
+    this.userSub = this.db.getUser(this.game.player1).subscribe(user => {
       if (user) {
         this.playerOneName = user.displayName;
         this.user = user;
@@ -114,16 +148,16 @@ export class PlayfieldPage {
       }
     });
 
-    this.db.getMoves(this.game.gid).subscribe((moves: Move[]) => {
+    this.movesSub = this.db.getMoves(this.game.gid).subscribe((moves: Move[]) => {
       console.log(`Got ${moves.length} moves from the server!`);
       moves.sort((a, b) => {
         return a.move - b.move
       });
-      moves.forEach(m => {
-        console.log(`Move ${m.move}`)
-      });
+//      moves.forEach(m => {
+//        console.log(`Move ${m.move}`)
+//      });
       if (this.turn < moves.length) {
-        if(this.game.state == "init") {
+        if (this.game.state == "init") {
           this.game.state = "active";
           this.db.updateGameState(this.game.gid, this.game.state);
         }
@@ -139,7 +173,7 @@ export class PlayfieldPage {
           this.game.state = "over";
           this.game.activePlayer = this.playerOneTurn ? 0 : 1;
           this.db.updateGameState(this.game.gid, this.game.state);
-        }else{
+        } else {
           this.game.activePlayer = this.playerOneTurn ? 1 : 0;
         }
         this.db.updateGameActivePlayer(this.game.gid, this.game.activePlayer);
@@ -151,29 +185,33 @@ export class PlayfieldPage {
   // Helper functions.
   //
 
+  private viewProfile() {
+    this.navCtrl.push(ProfilePage, {uid: this.user.uid});
+  }
+
   // Returns coin width based on grid size.
   private getCoinWidthStyle() {
-    return 100/this.width + "%";
+    return 100 / this.width + "%";
   }
 
   // Returns the coin position in % for top placing box.
   private getPlaceCoinPosition() {
-    return (100/this.width)*this.placeCoinPosition + "%";
+    return (100 / this.width) * this.placeCoinPosition + "%";
   }
 
   // Returns the hidden button size. Based on placment coin.
   private getHiddenMoveButtonsPosition() {
-    return ((100/this.width)*this.placeCoinPosition)-45 + "%";
+    return ((100 / this.width) * this.placeCoinPosition) - 45 + "%";
   }
 
   //
   private getMoveRightWidth() {
-    return (100/this.width)*(this.placeCoinPosition+1) + "%";
+    return (100 / this.width) * (this.placeCoinPosition + 1) + "%";
   }
 
   //
   private getMoveLeftWidth() {
-    return 80-(100/this.width)*(this.placeCoinPosition+1) + "%";
+    return 80 - (100 / this.width) * (this.placeCoinPosition + 1) + "%";
   }
 
 
@@ -184,30 +222,31 @@ export class PlayfieldPage {
   // Draw the main grid.
   private drawPlayfield() {
     this.gameGrid = new Array(this.height);
-    for(let i = 0; i < this.gameGrid.length; i++){
+    for (let i = 0; i < this.gameGrid.length; i++) {
       this.gameGrid[i] = new Array(this.width);
-      for(let j = 0; j < this.gameGrid[i].length; j++){
+      for (let j = 0; j < this.gameGrid[i].length; j++) {
         this.gameGrid[i][j] = this.coins.blank;
       }
     }
   }
 
   // Place coin in grid.
-  private dropCoin(x: number, y: number ,coinColor: any) {
+  private dropCoin(x: number, y: number, coinColor: any) {
     this.gameGrid[y][x] = coinColor;
   }
 
   // Cheks if there is a coin placed in grid.
-  private isPlaced(x,y) {
+  private isPlaced(x, y): boolean {
     return (this.gameGrid[y][x] !== this.coins.blank);
   }
 
   // Returns number of empty slots in the column under the placing coin.
-  private getPlacedY() {
-    for(this.placedY=5; this.placedY>=0; this.placedY--) {
+  private getPlacedY(): number {
+    for (this.placedY = this.height - 1; this.placedY >= 0; this.placedY--) {
       if (this.gameGrid[this.placedY][this.placeCoinPosition] === this.coins.blank) return this.placedY;
 
     }
+    return this.placedY;
   }
 
   //----------------------------------------------
@@ -216,25 +255,31 @@ export class PlayfieldPage {
 
   // Control buttons.
   private moveLeft() {
-    if(this.placeCoinPosition < this.width-1) {
-      if(this.dropping) this.switchTurn();
+    if (this.placeCoinPosition < this.width - 1) {
+      if (this.dropping) this.switchTurn();
       this.dropping = false;
       this.placeCoinPosition++;
     }
   }
+
   private moveRight() {
-    if(this.placeCoinPosition > 0) {
-      if(this.dropping) this.switchTurn();
+    if (this.placeCoinPosition > 0) {
+      if (this.dropping) this.switchTurn();
       this.dropping = false;
       this.placeCoinPosition--;
     }
   }
+
   private moveDown() {
-    if (this.getPlacedY() <= 5) {
+    let y = this.getPlacedY();
+    if(y >= this.height || y < 0)
+      return;
+    let x = this.placeCoinPosition;
+    if (y <= 5) {
       this.dropping = true;
       this.db.addMove(this.game.gid, {
-        x: this.placeCoinPosition,
-        y: this.getPlacedY(),
+        x: x,
+        y: y,
         player: this.playerOneTurn ? 0 : 1,
         move: this.turn
       } as Move);
@@ -257,46 +302,51 @@ export class PlayfieldPage {
   }
 
   // Switches between yellow and red and returns the color.
-  private getNextCoin() {
+  private getNextCoin(): string {
     if (this.playerOneTurn) return this.coins.yellow;
     return this.coins.red;
   }
 
-  private newGame() {
-    this.clearGrid();
-    this.dropping = false;
-    this.playerOneTurn = true;
-    this.placeCoinPosition = 3;
+  public newGame() {
+    this.reset();
+    let game: Game = {} as Game;
+    game.player1 = this.user.uid;
+    game.player2 = this.playerTwoName;
+    game.activePlayer = 0;
+    game.state = 'init';
+    game.type = 'local';
+    game[this.user.uid] = true;
+    this.db.createGame(game).then(value => {
+      this.getDbData(game);
+    });
   }
 
   private navToStartPage() {
-    this.navCtrl.popToRoot();
+    this.navCtrl.setRoot(HomePage);
   }
 
   //----------------------------------------------
   // Win check
   //
 
-  private tieCheck() {
+  private tieCheck(): boolean {
     for (let x = 0; x < this.width; x++) {
       if (this.gameGrid[0][x] === this.coins.blank) return false;
     }
     return true;
   }
 
-  winRowCheck(x: number,y: number) {
-    for(let i = 0; i<4; i++) {
-      if (this.winRowX[i] == x && this.winRowY[i] == y) {
-        return true;
-      }
+  winRowCheck(x: number, y: number): boolean {
+    for (let i = 0; i < 4; i++) {
+      if (this.winRowX[i] == x && this.winRowY[i] == y) return true;
     }
     return false;
   }
 
-  private winCheck(player :string) {
+  private winCheck(player: string): boolean {
 
     // verticalCheck
-    for (let y=0; y<this.height-3; y++) {
+    for (let y = 0; y < this.height - 3; y++) {
       for (let x = 0; x < this.width; x++) {
         if (
           this.gameGrid[y][x] === player &&
@@ -304,15 +354,15 @@ export class PlayfieldPage {
           this.gameGrid[y + 2][x] === player &&
           this.gameGrid[y + 3][x] === player
         ) {
-          this.winRowX = [x,x,x,x];
-          this.winRowY = [y,y+1,y+2,y+3];
+          this.winRowX = [x, x, x, x];
+          this.winRowY = [y, y + 1, y + 2, y + 3];
           return true;
         }
       }
     }
 
     // horizontalCheck
-    for (let x=0; x<this.width-3; x++) {
+    for (let x = 0; x < this.width - 3; x++) {
       for (let y = 0; y < this.height; y++) {
         if (
           this.gameGrid[y][x] === player &&
@@ -320,23 +370,23 @@ export class PlayfieldPage {
           this.gameGrid[y][x + 2] === player &&
           this.gameGrid[y][x + 3] === player
         ) {
-          this.winRowX = [x,x+1,x+2,x+3];
-          this.winRowY = [y,y,y,y];
+          this.winRowX = [x, x + 1, x + 2, x + 3];
+          this.winRowY = [y, y, y, y];
           return true;
         }
       }
     }
 
     // ascendingDiagonalCheck
-    for (let x=3; x<this.width; x++) {
-      for (let y = 0; y < this.height-3; y++) {
+    for (let x = 3; x < this.width; x++) {
+      for (let y = 0; y < this.height - 3; y++) {
         if (
           this.gameGrid[y][x] === player &&
           this.gameGrid[y + 1][x - 1] === player &&
           this.gameGrid[y + 2][x - 2] === player &&
           this.gameGrid[y + 3][x - 3] === player
         ) {
-          this.winRowX = [x,x+1,x+2,x+3];
+          this.winRowX = [x,x-1,x-2,x-3];
           this.winRowY = [y,y+1,y+2,y+3];
           return true;
         }
@@ -344,7 +394,7 @@ export class PlayfieldPage {
     }
 
     // descendingDiagonalCheck
-    for (let x=3; x<this.width; x++) {
+    for (let x = 3; x < this.width; x++) {
       for (let y = 3; y < this.height; y++) {
         if (
           this.gameGrid[y][x] === player &&
@@ -352,8 +402,8 @@ export class PlayfieldPage {
           this.gameGrid[y - 2][x - 2] === player &&
           this.gameGrid[y - 3][x - 3] === player
         ) {
-          this.winRowX = [x,x-1,x-2,x-3];
-          this.winRowY = [y,y-1,y-2,y-3];
+          this.winRowX = [x, x - 1, x - 2, x - 3];
+          this.winRowY = [y, y - 1, y - 2, y - 3];
           return true;
         }
       }
@@ -394,7 +444,7 @@ export class PlayfieldPage {
       }
     }
 
-    for (let i=0; i<1; i++) {
+    for (let i = 0; i < 1; i++) {
       for (let x = 0; x < this.width; x++) {
         this.gridCopy = JSON.parse(JSON.stringify(this.gameGrid));
         for (let y = this.height - 1; y >= 0; y--) {
@@ -414,9 +464,9 @@ export class PlayfieldPage {
     }
 
     let randomX;
-    let loopVar =  true;
+    let loopVar = true;
     let randomY;
-    while(loopVar) {
+    while (loopVar) {
 
       randomX = Math.floor(Math.random() * this.width);
       for (randomY = this.height - 1; randomY >= 0; randomY--) {
@@ -464,7 +514,7 @@ export class PlayfieldPage {
   }
 
   // Custom win check for AI
-  private aiTestOutcome(player :string) {
+  private aiTestOutcome(player: string): boolean {
 
     // verticalCheck
     for (let y = 0; y < this.height - 3; y++) {
@@ -533,8 +583,8 @@ export class PlayfieldPage {
     this.winRowY = [10, 10, 10, 10];
     this.win = false;
     this.drawPlayfield();
-    this.stepX = this.width-1;
-    this.stepY = this.height-1;
+    this.stepX = this.width - 1;
+    this.stepY = this.height - 1;
   }
 
   private loadGrid() {
