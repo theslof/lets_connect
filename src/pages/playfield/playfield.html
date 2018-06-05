@@ -22,7 +22,7 @@
 
   <ion-row class="playerBox" center>
     <ion-col text-center [class.textGlow]="!playerOneTurn">
-      <img class="avatar" src="../assets/imgs/avatars/{{playerOneAvatar}}.svg" (click)="viewProfile()"/>
+      <img class="avatar" src="assets/imgs/avatars/{{playerOneAvatar}}.svg" (click)="viewProfile()"/>
       <h2>{{playerOneName}}</h2>
       <ion-col class="winner" *ngIf="dropping && win && playerOneTurn">
         <h2>WINNER</h2>
@@ -35,7 +35,7 @@
     </ion-col>
 
     <ion-col text-center [class.textGlow]="playerOneTurn">
-      <img class="avatar" src="../assets/imgs/avatars/{{playerTwoAvatar}}.svg"/>
+      <img class="avatar" src="assets/imgs/avatars/{{playerTwoAvatar}}.svg"/>
       <h2>{{playerTwoName}}</h2>
       <ion-col class="winner" *ngIf="dropping && win && !playerOneTurn">
         <h2>WINNER</h2>
@@ -71,7 +71,7 @@
       <ion-col *ngFor="let item of row; let x = index" text-center>
         <img *ngIf="(x == placeCoinPosition) && (y == placedY) && dropping" class="coin coinSlideInDown" align-items-center src={{item}} [class.winHighlight]="winRowCheck(x,y)"/>
         <img *ngIf="(x != placeCoinPosition) || (y != placedY) || !dropping" class="coin" align-items-center src={{item}} [class.winHighlight]="winRowCheck(x,y)"/>
-        <img class="boardBackground" src="../../assets/imgs/playfield-background2.svg"/>
+        <img class="boardBackground" src="assets/imgs/playfield-background2.svg"/>
       </ion-col>
     </ion-row>
   </ion-grid>
