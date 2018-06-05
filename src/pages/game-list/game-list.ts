@@ -26,6 +26,7 @@ export class GameListPage {
     this.users = {};
     let uid = this.navParams.get("user");
     this.db.getActiveGames(uid).then((data: Game[]) => {
+      data.sort(((a, b) => a.state == "over" ? 1 : b.state == "over" ? -1 : 0));
         data.forEach(game => {
           let gameData: GameData = {} as GameData;
           gameData.game = game;

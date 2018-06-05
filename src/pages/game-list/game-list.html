@@ -10,7 +10,7 @@
 <ion-content padding>
   <ion-list>
     <ion-item-sliding *ngFor="let game of games">
-      <ion-item (click)="startGame(game.game)">
+      <ion-item (click)="startGame(game.game)" [class.turn]="game.turn1 && !game.over">
         <img src="../assets/imgs/avatars/{{game.i1}}.svg" />
         <span>
           <ion-icon *ngIf="game.turn1 && game.over" class="trophy" name="md-trophy"></ion-icon>
